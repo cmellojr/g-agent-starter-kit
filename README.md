@@ -1,15 +1,15 @@
-# Agent Starter Kit
+# Agent Starter Kit — Google Style Edition
 
-> Describe what you need in plain language. The Maestro agent breaks it into tasks and routes each one to a specialized AI model.
+> Describe what you need in plain language. The Maestro agent breaks it into tasks, checks them against [Google Style Guides](https://google.github.io/styleguide/), and routes each one to a specialized AI model.
 
-Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan (such as Claude Code) instead of burning it on everything.
+Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies — pre-configured with Google Style Guides for Python, Go, Shell, Rust, and Markdown. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan instead of burning it on everything.
 
-It's model-agnostic: orchestrate on Claude, plan on Kimi, review on Qwen, or any combination you choose.
+It's model-agnostic: orchestrate on Claude, plan on Kimi, review on Qwen, or any combination you choose. Code is reviewed against [Google Engineering Practices](https://google.github.io/eng-practices/review/) at every stage.
 
 ![Boot sequence demo](docs/demo.jpg)
 _Maestro booted on a Clean Architecture Go project — gitignore, auto-update, memory, rules, and 33 context files created automatically._
 
-This is a **foundation**, not a finished product. It ships what an average developer needs out of the box — general-purpose personas, common workflow skills, and unopinionated rules. Anything domain-specific or highly opinionated belongs in your own fork. Clone it, extend it, make it yours — or build one for your entire company.
+This is a **foundation**, not a finished product. It ships general-purpose personas, common workflow skills, and opinionated rules aligned with [Google Style Guides](https://google.github.io/styleguide/) and [Google Engineering Practices](https://google.github.io/eng-practices/review/). Language-specific style rules live in `rules/edicts/code-style-*.md`. Anything domain-specific or highly opinionated beyond this belongs in your own fork. Clone it, extend it, make it yours — or build one for your entire company.
 
 ## How It Works
 
@@ -17,7 +17,7 @@ The **Maestro** is the conductor. It receives user requests, decomposes them, an
 
 - **Architect** — plans implementations, defines before/after states
 - **Coder** — writes software following the plan
-- **Reviewer** — checks work for correctness and quality
+- **Reviewer** — checks work for design, coherence, quality (against Google Style Guides), security (OWASP), and documentation completeness
 - **Contextualizer** — documents project structure for orientation
 
 Each persona has an identity (who they are), a playbook (what they do), a handoff format (what they deliver), and red lines (what they must not do).
@@ -63,7 +63,9 @@ If the tools aren't installed or you're using a different CLI, the script exits 
 ```
 personas/    Specialized AI roles (who does the work)
 rules/       Constraints organized by authority level
+  edicts/    code-style-python.md, code-style-go.md, code-style-shell.md, code-style-rust.md, code-style-markdown.md
 skills/      Reusable procedures and protocols
+docs/        google-style-alignment.md — alignment plan and roadmap
 ```
 
 ## Rules Hierarchy
@@ -71,6 +73,8 @@ skills/      Reusable procedures and protocols
 - **Commandments** — absolute, never bypassed
 - **Edicts** — authoritative within scope, not bent
 - **Counsel** — wise guidance, may be deviated from with justification
+
+The `rules/edicts/` directory includes language-specific Google Style Guides (`code-style-python.md`, `code-style-go.md`, `code-style-shell.md`, `code-style-rust.md`, `code-style-markdown.md`). These are the authoritative reference for coding conventions — code is evaluated against them during the Quality review pass.
 
 ## Skills
 
@@ -81,6 +85,8 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **architect-self-review** — DRAFT self-review rubric — plan quality gate
 - **boot** — session startup sequence
 - **code-coherence-review** — logic coherence, correctness, and structural integrity checks
+- **code-design-review** — design, simplicity, and maintainability checks aligned with Google Code Review practices
+- **code-documentation-review** — verifies docstrings, `.context.md`, and feature map updates against Google standards
 - **code-quality-review** — rules-walk procedure for coding standards compliance
 - **code-sec-review** — OWASP-aligned security code review checklist
 - **coder-self-review** — GRASP self-review rubric — implementation quality gate
@@ -103,6 +109,8 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - Modify existing files to match your project's needs
 
 Each directory has a README with the full schema definition.
+
+- **Google Style Guides** — edit `rules/edicts/code-style-*.md` to tune conventions per language. The review pipeline loads these automatically based on file extension (see `docs/google-style-alignment.md` for the full roadmap).
 
 ## FAQ
 
@@ -157,3 +165,7 @@ Any model with a CLI tool that can accept a prompt via `stdin` works. As a quali
 If you use Mixture-of-Experts models (Kimi, Qwen, DeepSeek, or similar), cap thinking tokens at **16,000** in your CLI's configuration. Research across 121+ code review dispatches found that MoE models regress past this threshold — higher budgets cause models to qualify findings, soften severity, and rationalize away bugs they previously found. Dense models (Claude, Seed) do not exhibit this regression and can use higher budgets safely. See [Overfed, Overthought, Overasked](https://ntorga.com/overfed-overthought-overasked-stop-sabotaging-your-ai/) for the full research.
 
 If you're running OpenCode, the boot sequence already sets per-persona thinking budgets based on humor profiles — no manual configuration needed.
+
+### What Google Style Guides are included?
+
+This edition ships Google-aligned style guides for **Python**, **Go**, **Shell**, **Rust**, and **Markdown**. Each guide is a standalone `rules/edicts/code-style-*.md` file — edit them freely to match your team's preferences. The review pipeline detects the language of changed files and loads the corresponding guide automatically. See `docs/google-style-alignment.md` for the full alignment plan and roadmap.
