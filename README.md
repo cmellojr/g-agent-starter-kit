@@ -32,7 +32,7 @@ The framework **learns as it works**. Corrections, preferences, and lessons are 
 
    ```bash
    cd /path/to/your/project
-   git clone git@github.com:ntorga/agent-starter-kit.git .agents
+    git clone https://github.com/cmellojr/g-agent-starter-kit.git .agents
    ```
 
 2. Symlink the entry file to the project root:
