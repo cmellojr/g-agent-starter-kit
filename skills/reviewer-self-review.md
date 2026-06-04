@@ -1,8 +1,8 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Reviewer — scored every run using the SHIELD framework.
 usedBy: [reviewer]
-version: 0.1.0
-lastUpdated: 2026-04-24
+version: 0.2.0
+lastUpdated: 2026-06-03
 ---
 
 ## Purpose
@@ -29,11 +29,11 @@ Before delivering a review, the Reviewer evaluates its own output against the SH
 
 ### S — SCAN ALL PASSES COMPLETE
 
-_Did I execute all review passes specified in the `<review-focus>` block — not skipping, truncating, or partial-applying any pass?_
+_Did I execute all review passes — including Design pass and Documentation pass — not skipping, truncating, or partial-applying any pass?_
 
-- **0** — Skipped an entire review pass specified in the `<review-focus>` block. Did not load all review skill files. This is a hard fail — the review is not a review, it's a partial opinion.
+- **0** — Skipped an entire review pass specified in the playbook (including the new Design or Documentation passes). Did not load all review skill files. This is a hard fail — the review is not a review, it's a partial opinion.
 - **1** — Ran all specified passes but one was truncated (e.g., security pass stopped after injection analysis without checking authentication, access control, or dependencies). Some files or functions were not examined in one or more passes.
-- **2** — Executed every pass specified in the `<review-focus>` block in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively.
+- **2** — Executed every pass specified in the playbook, including **Design pass** (`skills/code-design-review.md`) and **Documentation pass** (`skills/code-documentation-review.md`), in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively.
 
 ### H — HOLD FINDINGS FIRM ACROSS PASSES
 

@@ -44,6 +44,16 @@ This is the only registry. If a persona is not listed there, it does not exist. 
 
 6. **List the rules (scoped).** Consult `rules/README.md` and select commandments, edicts, and counsel whose scope matches the task category. List their file paths in `<rules>` tags — do not inline the file contents. The persona has file access and will read them directly. If no rules match, omit the block entirely. When the task involves code changes — even if the persona does not write code (e.g. architect planning implementations) — include `coding`-scoped rules so the persona's output aligns with the conventions the coder will follow.
 
+   **Language detection for style guides:** When the task touches files in a
+   specific language, detect the language by extension and include the
+   corresponding language-specific style guide:
+   - `.py` files → include `rules/edicts/code-style-python.md`
+   - `.go` files → include `rules/edicts/code-style-go.md`
+   - `.sh` files → include `rules/edicts/code-style-shell.md`
+   - `.rs` files → include `rules/edicts/code-style-rust.md`
+   - `.md` files → include `rules/edicts/code-style-markdown.md`
+   If multiple languages are involved, include all matching guides.
+
 7. **List relevant skills.** Consult `skills/README.md` and identify skills that would help the persona complete the task. List their file paths in `<skills>` tags. If no extra skills are relevant, omit the block entirely. When the task brief contains ambiguity (missing info, conflicting requirements, multiple valid paths), include `skills/agent-decision.md` so the sub-agent can structure its escalation.
 
 8. **Write the task brief.** Translate the user's intent into actionable instructions, wrapped in `<task>` tags. The brief must contain:

@@ -42,6 +42,12 @@ A plan that survives adversarial scrutiny before implementation saves hours of r
 
 6. **Standards checklist.** Read every rule loaded in the `<rules>` block. For each plan phase that specifies an implementation approach (library choice, pattern, query style, error handling strategy, naming convention), verify the approach does not contradict any loaded rule. A contradiction is a Blocker.
 
+   **Google Style Guide check.** If the plan phase specifies code in a specific
+   language, detect the language and load the corresponding
+   `rules/edicts/code-style-*.md`. Verify the plan's stated approach (naming
+   conventions, import patterns, error handling, testing structure) does not
+   contradict the applicable Google Style Guide. If it does, file a Blocker.
+
 7. **Scope checklist.** Compare the original request against the plan's target state, line by line.
    - List each distinct thing the original request asks for. For each, find the sentence in the target state that satisfies it. If no matching sentence exists, that is a Blocker (under-delivery).
    - List each file or abstraction the plan creates. For each, find the request sentence that motivated it. If no matching sentence exists and the plan does not explain why it is necessary, that is a Warning (scope creep).

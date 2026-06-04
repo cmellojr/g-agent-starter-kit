@@ -1,18 +1,27 @@
 ---
-shortDescription: Git workflow rules for all coders.
+shortDescription: Git workflow rules — Google style commit messages.
 scope: coding
-version: 0.1.0
-lastUpdated: 2026-03-04
+version: 0.2.0
+lastUpdated: 2026-06-03
 ---
 
 ## Statement
 
-All commits MUST use conventional commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`.
+Commit messages MUST follow the structure prescribed by
+[How to Write a Git Commit Message](https://cbea.ms/git-commit/):
 
-Branch names MUST follow the same prefixes: `feat-*`, `fix-*`, `refactor-*`, `docs-*`, `test-*`, `chore-*`.
+1. **Subject line:** ≤ 50 characters, capitalized, no trailing period,
+   imperative mood ("Add feature" not "Added feature").
+2. **Blank line** between subject and body.
+3. **Body:** wrapped at 72 characters, explains **what** and **why**,
+   not **how**.
 
-Commit messages MUST be short — a single phrase. If you need to describe too much, you should have committed earlier.
+Branch naming SHOULD follow a descriptive pattern (`fix-login-timeout`,
+`add-user-preferences`). Prefix-based branching (`feat-*`, `fix-*`) is
+permitted but not required.
 
 ## Rationale
 
-Consistent commit conventions enable automated changelogs, semantic versioning, and make git history readable. Short commits with clear intent are easier to review, revert, and bisect.
+Well-crafted commit messages make git history readable, searchable, and useful
+for code review, bisecting, and release notes. The Google style (cbea.ms) is
+the standard at Google and produces consistent, informative histories.

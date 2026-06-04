@@ -1,8 +1,8 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Coder — scored every run using the GRASP framework.
 usedBy: [coder]
-version: 0.1.0
-lastUpdated: 2026-04-24
+version: 0.2.0
+lastUpdated: 2026-06-03
 ---
 
 ## Purpose
@@ -32,8 +32,8 @@ Before delivering a handoff, the Coder evaluates its own output against the GRAS
 _Did I follow the playbook end-to-end with no scope creep?_
 
 - **0** — Skipped todo creation or management. Did not review context files before touching code. Tests do not pass or were not run. Handoff format is wrong, missing sections, or absent. Scope expanded beyond the plan/brief.
-- **1** — Todo managed and context reviewed, but one or more procedural gaps: did not load relevant skills before implementing, did not update `.context.md` when file changes warranted it, or handoff has minor omissions (missing Decisions section when deviations occurred, or Incomplete section not populated for unfinished items).
-- **2** — All playbook steps followed: existing todo checked (or new one created), plan type determined, context files reviewed, neighboring files read for style, relevant skills loaded, test-first approach used (tests failed before implementation), all tests pass, `.context.md` updated where changes warranted, acceptance criteria verified, handoff delivered in exact format with all sections populated. Yield conditions evaluated honestly — yielded when warranted, continued when appropriate.
+- **1** — Todo managed and context reviewed, but one or more procedural gaps: did not load relevant skills before implementing, did not consult the Google Style Guide for the language, did not update `.context.md` when file changes warranted it, or handoff has minor omissions (missing Decisions section when deviations occurred, or Incomplete section not populated for unfinished items).
+- **2** — All playbook steps followed: existing todo checked (or new one created), plan type determined, context files reviewed, neighboring files read for style, **Google Style Guide for the language consulted and followed**, relevant skills loaded, test-first approach used (tests failed before implementation), all tests pass, `.context.md` updated where changes warranted, acceptance criteria verified, handoff delivered in exact format with all sections populated. Yield conditions evaluated honestly — yielded when warranted, continued when appropriate.
 
 ### R — REASONING
 
@@ -53,11 +53,11 @@ _Does this code respect the project's architectural boundaries?_
 
 ### S — STYLE
 
-_Does this code look like it belongs in this codebase?_
+_Did this code look like it belongs in this codebase and follow the Google Style Guide for the language?_
 
-- **0** — Code does not match the local style of surrounding files (different naming conventions, structure, or patterns). Commandment-level rule violations present. Cryptic one-liners or clever patterns that need comments to understand. Unjustified lint/type suppression markers added.
-- **1** — Style mostly matches, but one or two naming or formatting inconsistencies exist against the surrounding code. Counsel-level deviations present without visible justification. One lint suppression added without an adjacent comment explaining why.
-- **2** — Read two neighboring files before writing and matched their style exactly. All naming follows project conventions. Code is readable without comments — the structure explains itself. No new lint suppressions, or each has a clear adjacent justification. All `code-` rules checked and followed. Commandments respected, edicts justified, counsel noted.
+- **0** — Code does not match the local style of surrounding files (different naming conventions, structure, or patterns). Violates the Google Style Guide for the language. Commandment-level rule violations present. Cryptic one-liners or clever patterns that need comments to understand. Unjustified lint/type suppression markers added.
+- **1** — Style mostly matches, but one or two naming or formatting inconsistencies exist against the surrounding code or the Google Style Guide. Counsel-level deviations present without visible justification. One lint suppression added without an adjacent comment explaining why.
+- **2** — Read two neighboring files before writing and matched their style exactly. **Follows Google Style Guide conventions for the language** (naming, imports, formatting, docstrings). All naming follows project conventions. Code is readable without comments — the structure explains itself. No new lint suppressions, or each has a clear adjacent justification. All `code-` rules checked and followed. Commandments respected, edicts justified, counsel noted.
 
 ### P — PROTECTION
 

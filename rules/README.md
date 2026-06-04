@@ -10,9 +10,14 @@ Rules are constraints — short, direct, and non-procedural. A rule that needs m
 
 ## Available Rules
 
-- **`commandments/git`** — Conventional commits, branch naming, commit style (coding)
-- **`edicts/code-quality`** — Universal naming, testing, and quality conventions (coding)
+- **`commandments/git`** — Google-style commit messages, branch naming, commit style (coding)
+- **`edicts/code-quality`** — Cross-language quality conventions: KISS, DRY, SRP, error handling, data trust boundary (coding)
 - **`edicts/code-debugging`** — Root cause before fix, three-strike rule, anti-rationalization (coding)
+- **`edicts/code-style-python`** — Google Python Style Guide: 80 cols, 4 spaces, snake_case, type annotations, docstrings (coding-python)
+- **`edicts/code-style-go`** — Google Go Style Guide: gofmt, MixedCaps, least mechanism, clarity > concision (coding-go)
+- **`edicts/code-style-shell`** — Google Shell Style Guide: Bash, 2 spaces, 80 cols, local, main(), ShellCheck (coding-shell)
+- **`edicts/code-style-rust`** — Rust Style Guide: rustfmt, 4 spaces, 100 cols, Result, ownership, traits (coding-rust)
+- **`edicts/code-style-markdown`** — Google Markdown Style Guide: 80 cols, ATX headings, fenced code blocks, reference links (coding-markdown)
 
 ## File Naming
 

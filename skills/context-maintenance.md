@@ -1,8 +1,8 @@
 ---
 shortDescription: How to maintain .context.md files and docs/FEATURE-MAP.md as the project evolves.
 usedBy: [coder, contextualizer]
-version: 0.2.0
-lastUpdated: 2026-04-24
+version: 0.2.1
+lastUpdated: 2026-06-03
 ---
 
 ## Purpose
@@ -104,3 +104,11 @@ Brief description of what this feature does from the user's perspective.
 - If a constraint looks like it should apply project-wide rather than to this directory alone, flag it to the user but do not modify the `.agents/` directory. That directory is managed via git.
 - Never add a feature to the map that you cannot trace end-to-end through the code. If the path is unclear, say so.
 - Never update the `updated` date in a `.context.md` `<context>` tag unless the content of that file actually changed. Touching the date without a content change creates false drift signals.
+
+## Note: Google Style Guide References
+
+When populating the `## Constraints` or `## Guidance` sections of a
+`.context.md`, consider referencing the applicable Google Style Guide
+(`rules/edicts/code-style-*.md`) for language-specific rules. This ensures
+the context file aligns with the project-wide style conventions and avoids
+duplicating style guidance already codified in the edict files.

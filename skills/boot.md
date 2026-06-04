@@ -53,6 +53,12 @@ All framework files live under `.agents/`. Markdown references within the framew
 
 5. **Load the rules index.** Read `rules/README.md` to know what rules are available and their scopes. Do not read the individual rule files — sub-agents will read them when dispatched.
 
+   **Detect project languages.** Scan the project for common file extensions
+   (`.py`, `.go`, `.sh`, `.rs`, `.md`, `.ts`, `.tsx`, `.js`, `.java`, `.cpp`)
+   to determine which languages are in use. If the project uses a language not
+   yet covered by a `code-style-*.md` guide, suggest creating one in a future
+   phase (see `docs/google-style-alignment.md` roadmap).
+
 6. **Context.** Verify the project has context files. Run:
 
    ```bash
