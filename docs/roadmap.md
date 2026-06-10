@@ -1,6 +1,6 @@
 # Roadmap: Google Engineering Practices Integration
 
-This document outlines the consolidation of style guides, engineering practices, and development standards to align the **Agent Starter Kit** with Google software engineering standards.
+This document outlines the consolidation of style guides, engineering practices, and development standards to align the **G-Agent Starter Kit** with Google software engineering standards.
 
 [TOC]
 

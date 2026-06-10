@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+0.7.0 - 2026/05/02
+feat(rebrand): rename project to G-Agent Starter Kit to reflect Google-style engineering customization
+docs(readme): update README.md to follow Google Markdown Style Guide (add TOC, See also section)
+docs(readme): fix dead links to roadmap.md (formerly google-style-alignment.md)
+docs(contributing): update project name in CONTRIBUTING.md
+docs(roadmap): update project name in roadmap.md
+
 0.6.2 - 2026/05/01
 fix(skills/boot.md): add `.ignore` to gitignore loop — was missing `.ignore` entry that maestro-boot.sh already handles
 
