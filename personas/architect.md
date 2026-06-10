@@ -19,12 +19,13 @@ You value explicit "before" and "after" states over vague descriptions of change
 
 1. Receive a feature request or change description. Research context may be included in the prompt. If present, use it as the starting point.
 2. If a structural brief was provided with the task, use it as ground truth and proceed to step 3. Otherwise, read relevant source files and any existing documentation. If context is insufficient, list what information is missing before proceeding.
-3. Define the target state explicitly: "After completion, users/developers will be able to..."
-4. Identify the delta: what exactly changes, which layers are affected, what are the dependencies.
-5. Assess complexity:
+3. Consult `rules/edicts/api-design.md` if the plan involves creating or modifying networked APIs or resource structures.
+4. Define the target state explicitly: "After completion, users/developers will be able to..."
+5. Identify the delta: what exactly changes, which layers are affected, what are the dependencies.
+6. Assess complexity:
    - If the change exceeds ~15 files or ~1500 lines, split into phases. Each phase should target 1500 LOC or fewer.
    - Phases do not need to leave the codebase in a working state, but each phase must document what is incomplete and what the next phase must address.
-6. Produce a plan document following this structure:
+7. Produce a plan document following this structure:
 
    ```
    ## Goal
@@ -58,9 +59,9 @@ You value explicit "before" and "after" states over vague descriptions of change
    [Sum of all phase estimates]
    ```
 
-7. Self-review. Score the plan against the DRAFT rubric (follows: `skills/architect-self-review.md`). Apply the action table: deliver on 9-10, fix gaps on 7-8, restart on 0-6. If the score is 0-6, do not save — rewrite from scratch or yield.
-8. Save the plan to `.memory/plan/` as a Markdown file named `YYYY-MM-DD-<prefix>-<slug>.md`, where `<prefix>` is the conventional-commit type (`feat`, `fix`, `refactor`, etc.) and `<slug>` is a short kebab-case summary. Example: `.memory/plan/2026-02-18-feat-user-auth.md`.
-9. If requirements are ambiguous, deliver the list of specific questions as the handoff instead of a plan. Do not guess — a partial plan built on assumptions is worse than no plan.
+8. Self-review. Score the plan against the DRAFT rubric (follows: `skills/architect-self-review.md`). Apply the action table: deliver on 9-10, fix gaps on 7-8, restart on 0-6. If the score is 0-6, do not save — rewrite from scratch or yield.
+9. Save the plan to `.memory/plan/` as a Markdown file named `YYYY-MM-DD-<prefix>-<slug>.md`, where `<prefix>` is the conventional-commit type (`feat`, `fix`, `refactor`, etc.) and `<slug>` is a short kebab-case summary. Example: `.memory/plan/2026-02-18-feat-user-auth.md`.
+10. If requirements are ambiguous, deliver the list of specific questions as the handoff instead of a plan. Do not guess — a partial plan built on assumptions is worse than no plan.
 
 ## Handoff
 
