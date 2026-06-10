@@ -1,12 +1,12 @@
 # Contributing
 
-Thank you for your interest in contributing to the Agent Starter Kit! This guide will help you understand how to effectively contribute to this repository.
+Thank you for your interest in contributing to the G-Agent Starter Kit! This guide will help you understand how to effectively contribute to this repository.
 
 ## Getting Started
 
 Before submitting any changes, please discuss your proposed modifications with the repository maintainers by opening an issue. This step is crucial to ensure that your contributions align with the project's goals and to avoid duplicating efforts.
 
-The Agent Starter Kit is a **foundation** — a minimal, unopinionated scaffold that any developer can clone and extend for their own project. Contributions should reinforce this philosophy:
+The G-Agent Starter Kit is a **foundation** — a minimal, unopinionated scaffold that any developer can clone and extend for their own project. Contributions should reinforce this philosophy:
 
 - **Keep it general.** Skills, rules, and personas must serve the workflow of an average developer. Domain-specific or highly opinionated additions belong in your own fork, not here.
 - **Keep it minimal.** Every file added is context every user pays for. If a contribution doesn't clearly benefit the common case, it doesn't belong in the starter kit.

@@ -1,8 +1,10 @@
-# Agent Starter Kit — Google Style Edition
+# G-Agent Starter Kit — Google Style Edition
 
 > Describe what you need in plain language. The Maestro agent breaks it into tasks, checks them against [Google Style Guides](https://google.github.io/styleguide/), and routes each one to a specialized AI model.
 
-Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies — pre-configured with Google Style Guides for Python, Go, Shell, Rust, and Markdown. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan instead of burning it on everything.
+[TOC]
+
+G-Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies — pre-configured with Google Style Guides for Python, Go, Shell, Rust, and Markdown. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan instead of burning it on everything.
 
 It's model-agnostic: orchestrate on Claude, plan on Kimi, review on Qwen, or any combination you choose. Code is reviewed against [Google Engineering Practices](https://google.github.io/eng-practices/review/) at every stage.
 
@@ -65,7 +67,7 @@ personas/    Specialized AI roles (who does the work)
 rules/       Constraints organized by authority level
   edicts/    code-style-python.md, code-style-go.md, code-style-shell.md, code-style-rust.md, code-style-markdown.md
 skills/      Reusable procedures and protocols
-docs/        google-style-alignment.md — alignment plan and roadmap
+docs/        roadmap.md — alignment plan and roadmap
 ```
 
 ## Rules Hierarchy
@@ -110,13 +112,13 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 
 Each directory has a README with the full schema definition.
 
-- **Google Style Guides** — edit `rules/edicts/code-style-*.md` to tune conventions per language. The review pipeline loads these automatically based on file extension (see `docs/google-style-alignment.md` for the full roadmap).
+- **Google Style Guides** — edit `rules/edicts/code-style-*.md` to tune conventions per language. The review pipeline loads these automatically based on file extension (see `docs/roadmap.md` for the full roadmap).
 
 ## FAQ
 
 ### Why this over other harnesses?
 
-GSD, GStack, and Gas Town are software — they lock you into dependencies, runtimes, and rigid workflows. Agent Starter Kit is **pure natural language**\*. Every persona, rule, and skill is a Markdown file you can edit with zero installation or build step.
+GSD, GStack, and Gas Town are software — they lock you into dependencies, runtimes, and rigid workflows. G-Agent Starter Kit is **pure natural language**\*. Every persona, rule, and skill is a Markdown file you can edit with zero installation or build step.
 
 Most harnesses are built around dense, expensive models and burn thousands of tokens on guidance you'll never use. This kit is a **scalpel**: minimal by design, tuned for cheaper MoE models like DeepSeek, GLM, Kimi, and Qwen. You pay only for the context you need. When your project grows, you extend it — add a persona, tweak a rule, swap a provider — all in plain text. Other tools produce code once and walk away. This framework learns, remembers, and adapts across every session.
 
@@ -168,4 +170,11 @@ If you're running OpenCode, the boot sequence already sets per-persona thinking 
 
 ### What Google Style Guides are included?
 
-This edition ships Google-aligned style guides for **Python**, **Go**, **Shell**, **Rust**, and **Markdown**. Each guide is a standalone `rules/edicts/code-style-*.md` file — edit them freely to match your team's preferences. The review pipeline detects the language of changed files and loads the corresponding guide automatically. See `docs/google-style-alignment.md` for the full alignment plan and roadmap.
+This edition ships Google-aligned style guides for **Python**, **Go**, **Shell**, **Rust**, and **Markdown**. Each guide is a standalone `rules/edicts/code-style-*.md` file — edit them freely to match your team's preferences. The review pipeline detects the language of changed files and loads the corresponding guide automatically. See `docs/roadmap.md` for the full alignment plan and roadmap.
+
+## See also
+
+- [Google Style Guides](https://google.github.io/styleguide/)
+- [Google Engineering Practices](https://google.github.io/eng-practices/)
+- [Google API Design Guide](https://cloud.google.com/apis/design)
+- [Google Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html)
