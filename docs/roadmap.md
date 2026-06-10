@@ -17,7 +17,7 @@ This document outlines the consolidation of style guides, engineering practices,
 | **Phase 7** | Context Maintenance Alignment | **Done** |
 | **Phase 8** | Adversarial Plan Review Alignment | **Done** |
 | **Phase 9** | CL Author Guidelines (Small CLs) | **Pending** |
-| **Phase 10** | API Design Standards | **Pending** |
+| **Phase 10** | API Design Standards | **Done** |
 | **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Pending** |
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
 | **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
