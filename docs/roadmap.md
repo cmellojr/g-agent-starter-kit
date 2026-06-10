@@ -2,6 +2,8 @@
 
 This document outlines the consolidation of style guides, engineering practices, and development standards to align the **Agent Starter Kit** with Google software engineering standards.
 
+[TOC]
+
 ## Status Overview
 
 | Phase | Item | Status |
@@ -93,3 +95,11 @@ This document outlines the consolidation of style guides, engineering practices,
     *   Create `rules/edicts/code-style-typescript.md`.
     *   Create `rules/edicts/code-style-html-css.md`.
 *   **Reference**: [Google Style Guides](https://google.github.io/styleguide/).
+
+## See also
+
+*   [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+*   [Google Go Style Guide](https://google.github.io/styleguide/go/guide)
+*   [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
+*   [Google Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html)
+*   [Google Engineering Practices](https://google.github.io/eng-practices/)
