@@ -1,5 +1,5 @@
 ---
-shortDescription: Reviews documentation — .context.md, docstrings, README, FEATURE-MAP.md.
+shortDescription: Reviews documentation — .context.md, docstrings, README, features.md.
 usedBy: [reviewer]
 version: 0.1.0
 lastUpdated: 2026-06-03
@@ -10,7 +10,7 @@ lastUpdated: 2026-06-03
 Documentation that drifts from the code is worse than no documentation — it
 misleads. This skill verifies that structural changes are reflected in
 `.context.md` files, that public declarations have docstrings following the
-applicable Google Style Guide, and that README and FEATURE-MAP.md are current.
+applicable Google Style Guide, and that README and features.md are current.
 
 ## Procedure
 
@@ -38,15 +38,15 @@ applicable Google Style Guide, and that README and FEATURE-MAP.md are current.
    - Does the README need updating? If yes and it was not updated, file a
      Warning.
 
-5. **Check docs/FEATURE-MAP.md.** If the change adds, removes, or renames a
+5. **Check docs/features.md.** If the change adds, removes, or renames a
    user-facing feature:
-   - Is the feature reflected in `docs/FEATURE-MAP.md`? If not, file a Warning.
+   - Is the feature reflected in `docs/features.md`? If not, file a Warning.
 
 6. **Classify findings.**
    - **Blocker** — Missing docstring on a public declaration (violates Google
      Style Guide). Structural change with no `.context.md` at all.
    - **Warning** — `.context.md` exists but is outdated. Docstring exists but
-     does not fully follow format. README or FEATURE-MAP needs updating.
+     does not fully follow format. README or features.md needs updating.
    - **Note** — Cosmetic documentation suggestions.
 
 ## Guardrails

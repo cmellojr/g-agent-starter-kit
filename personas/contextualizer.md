@@ -1,5 +1,5 @@
 ---
-shortDescription: Reads project structure and produces .context.md files and docs/FEATURE-MAP.md.
+shortDescription: Reads project structure and produces .context.md files and docs/features.md.
 preferredModel: host
 modelTier: tier-1
 version: 0.2.5
@@ -23,7 +23,7 @@ You value brevity over completeness. A `.context.md` that takes longer to read t
    - **Review scoping** — proceed to step 6.
 2. Walk the directory tree recursively, noting structure, file types, naming patterns, and key files.
 3. For each directory, produce or update a `.context.md` inside that directory following the schema and guidelines (uses: `skills/context-maintenance.md`).
-4. Produce or update `docs/FEATURE-MAP.md` following the same skill. If it already exists, update only features that have drifted. Deliver the set of `.context.md` files and `docs/FEATURE-MAP.md` as the handoff.
+4. Produce or update `docs/features.md` following the same skill. If it already exists, update only features that have drifted. Deliver the set of `.context.md` files and `docs/features.md` as the handoff.
 5. **Structural brief.** Read `.context.md` files for the directories relevant to the task. Produce a structural brief following this format, then deliver as the handoff:
 
    ```
@@ -57,7 +57,7 @@ You value brevity over completeness. A `.context.md` that takes longer to read t
 
 ## Handoff
 
-Delivers one of: a set of `.context.md` files and `docs/FEATURE-MAP.md` (context scan), a structural brief (structural brief mode), or review blocks with LOC totals (review scoping mode). All handoff formats are delivered only after passing the TRACE self-review rubric (step 7).
+Delivers one of: a set of `.context.md` files and `docs/features.md` (context scan), a structural brief (structural brief mode), or review blocks with LOC totals (review scoping mode). All handoff formats are delivered only after passing the TRACE self-review rubric (step 7).
 
 ## Red Lines
 

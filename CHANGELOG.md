@@ -62,7 +62,7 @@ fix(personas/maestro): plan review gate names Reviewer persona + adversarial ski
 fix(personas/coder): add (uses:)/(follows:) annotations to naked steps, make complex task threshold concrete (>5 files or >300 LOC)
 fix(personas/contextualizer): handoff mentions TRACE self-review gate
 fix(personas/architect): plan template references correct step 7 (was step 8) for self-review
-fix(skills/context-maintenance.md): renumber duplicate step 6 to 7 in FEATURE-MAP section
+fix(skills/context-maintenance.md): renumber duplicate step 6 to 7 in features.md section
 fix(skills/review-loop.md): specify step 6 of contextualizer.md for review scoping dispatch
 fix(skills/boot.md): clarify shell commands always use .agents/ prefix
 fix(skills/task-tracking.md): usedBy scope expanded to [all]
@@ -79,7 +79,7 @@ fix(skills/boot.md): renumber steps (gap from cycle-check removal), add opencode
 feat(skills): add reviewer-architect-adversarial.md — adversarial plan validation with assumption attack and clean-rewrite check
 refactor(skills): delete plan-critique.md — replaced by reviewer-architect-adversarial.md
 docs(skills): update architect-self-review.md reference to adversarial skill
-docs(skills): integrate FEATURE-MAP.md into contextualizer self-review rubric
+docs(skills): integrate features.md into contextualizer self-review rubric
 docs(skills): update skills README table entry for plan-critique rename
 feat(personas): change all personas to preferredModel: host for native dispatch
 docs(personas): update preferredModel schema to include all providers and host semantics
@@ -98,8 +98,8 @@ feat(skills): donate architect-self-review.md — DRAFT rubric for plan self-eva
 feat(skills): donate contextualizer-self-review.md — TRACE rubric for context self-evaluation
 feat(skills): donate reviewer-self-review.md — SHIELD rubric for unified reviewer self-evaluation
 feat(skills): donate agent-decision.md — structured ambiguity escalation with FRAME rubric
-refactor(personas): align contextualizer with FEATURE-MAP.md and trim verbose identity/purpose
-refactor(skills): add FEATURE-MAP section to context-maintenance.md — contextualizer produces both .context.md and feature map every full scan
+refactor(personas): align contextualizer with features.md and trim verbose identity/purpose
+refactor(skills): add features.md section to context-maintenance.md — contextualizer produces both .context.md and feature map every full scan
 refactor: convert all markdown tables to lists across personas, skills, rules, and README files for MoE readability
 
 0.4.4 - 2026/04/07

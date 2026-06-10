@@ -12,7 +12,7 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 - `code-quality-review` — Rules-walk procedure for coding standards compliance
 - `code-sec-review` — OWASP-aligned security code review checklist
 - `coder-self-review` — GRASP self-review rubric — implementation quality gate
-- `context-maintenance` — How to maintain .context.md files and docs/FEATURE-MAP.md as the project evolves
+- `context-maintenance` — How to maintain .context.md files and docs/features.md as the project evolves
 - `contextualizer-self-review` — TRACE self-review rubric — context generation quality gate
 - `dispatch` — Assembles sub-agent prompts with task brief
 - `loop-recovery` — Structured recovery and escalation for retry loops

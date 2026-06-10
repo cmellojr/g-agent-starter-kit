@@ -1,5 +1,5 @@
 ---
-shortDescription: How to maintain .context.md files and docs/FEATURE-MAP.md as the project evolves.
+shortDescription: How to maintain .context.md files and docs/features.md as the project evolves.
 usedBy: [coder, contextualizer]
 version: 0.2.1
 lastUpdated: 2026-06-03
@@ -7,7 +7,7 @@ lastUpdated: 2026-06-03
 
 ## Purpose
 
-Every directory keeps a `.context.md` that answers "what lives here." The project keeps one `docs/FEATURE-MAP.md` that maps each user-facing feature to its code path. This skill defines when and how to update both, and the schemas they follow.
+Every directory keeps a `.context.md` that answers "what lives here." The project keeps one `docs/features.md` that maps each user-facing feature to its code path. This skill defines when and how to update both, and the schemas they follow.
 
 ## Procedure
 
@@ -54,9 +54,9 @@ exists.
 - Constraints and Guidance are optional — only include them when the directory has rules worth stating. Use RFC-style language.
 - Keep it short. This file will be read frequently by multiple agents.
 
-### docs/FEATURE-MAP.md
+### docs/features.md
 
-5. **Scope.** Prefer scanning from `src/` or `docs/` as the root. The feature map is a single file at the project root — `docs/FEATURE-MAP.md`.
+5. **Scope.** Prefer scanning from `src/` or `docs/` as the root. The feature map is a single file at the project root — `docs/features.md`.
 
 6. **Determine if a feature map update is needed.** An update is required when a change:
    - Adds, removes, or renames a user-facing feature.
@@ -68,7 +68,7 @@ exists.
    - Internal refactors that preserve the same entry points and layers.
    - Style, formatting, or test-only changes.
 
-7. **If `docs/FEATURE-MAP.md` does not exist yet, create it** using this schema. If it exists, update only the affected entries.
+7. **If `docs/features.md` does not exist yet, create it** using this schema. If it exists, update only the affected entries.
 
 ```markdown
 # Feature Map

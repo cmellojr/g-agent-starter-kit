@@ -85,7 +85,7 @@ Checklist based on [Google Code Review — What to Look For](https://google.gith
 
 ### 4.3 Create `skills/code-documentation-review.md` (NEW)
 
-- `.context.md` and `docs/FEATURE-MAP.md` updated?
+- `.context.md` and `docs/features.md` updated?
 - Docstrings follow Google Style Guide for the language?
 - README or relevant docs updated?
 
