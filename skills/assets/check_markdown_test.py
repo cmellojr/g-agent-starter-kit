@@ -88,8 +88,7 @@ class TestCheckMarkdown(unittest.TestCase):
             "docs/.context.md",
             "docs/CONTRIBUTING.md",
             "docs/features.md",
-            "docs/google-engineering-practices-roadmap.md",
-            "docs/google-style-alignment.md",
+            "docs/roadmap.md",
         ]
         for tf in target_files:
             full_path = os.path.join(root_dir, tf)
