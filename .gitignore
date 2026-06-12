@@ -5,3 +5,4 @@ opencode.json
 .ignore
 __pycache__/
 .agents/
+__pycache__/

@@ -1,6 +1,7 @@
 # Contributing
 
-Thank you for your interest in contributing to the G-Agent Starter Kit! This guide
+Thank you for your interest in contributing to the G-Agent Starter Kit! This
+guide
 will help you understand how to effectively contribute to this repository.
 
 ## Getting Started

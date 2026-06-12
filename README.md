@@ -175,7 +175,8 @@ Each directory has a README with the full schema definition.
 ### Why this over other harnesses?
 
 GSD, GStack, and Gas Town are software — they lock you into dependencies,
-runtimes, and rigid workflows. G-Agent Starter Kit is **pure natural language**\*.
+runtimes, and rigid workflows. G-Agent Starter Kit is **pure natural
+language**\*.
 Every persona, rule, and skill is a Markdown file you can edit with zero
 installation or build step.
 
