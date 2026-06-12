@@ -1,7 +1,9 @@
 name: Jules PR Review
+
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
+  workflow_dispatch:
 
 concurrency:
   group: jules-review-${{ github.event.pull_request.number }}
@@ -9,6 +11,9 @@ concurrency:
 
 jobs:
   review:
+    if: |
+      github.event_name != 'labeled' ||
+      github.event.label.name == 'jules-review'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
