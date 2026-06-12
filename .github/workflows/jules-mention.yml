@@ -5,17 +5,18 @@ on:
     types: [created]
 
 jobs:
-  add-review-label:
+  trigger-review:
     if: |
       contains(github.event.comment.body, '@jules') &&
       github.event.issue.pull_request
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      actions: write
     steps:
-      - name: Add jules-review label
+      - name: Trigger review via workflow_dispatch
         run: |
-          gh pr edit "$PR" --add-label "jules-review"
+          gh workflow run pr-review.yml \
+            --ref main \
+            -f pr_number="${{ github.event.issue.number }}"
         env:
-          PR: ${{ github.event.issue.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
