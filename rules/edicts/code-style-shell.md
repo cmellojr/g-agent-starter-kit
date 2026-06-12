@@ -35,7 +35,7 @@ lastUpdated: 2026-06-03
 Split one pipe per line if the pipeline does not fit on one line. Place the
 pipe on the newline with 2-space indent:
 
-```
+```bash
 command1 \
   | command2 \
   | command3
@@ -78,7 +78,7 @@ risks.
 ### Arrays
 
 Use Bash arrays for lists of elements to avoid quoting issues:
-```
+```bash
 declare -a FLAGS=(--foo --bar='baz')
 mybinary "${FLAGS[@]}"
 ```
@@ -86,7 +86,7 @@ mybinary "${FLAGS[@]}"
 ### Pipes to while
 
 Avoid — pipes create a subshell. Use process substitution instead:
-```
+```bash
 while read -r line; do ... done < <(command)
 ```
 
@@ -123,7 +123,7 @@ constants precede them.
 A `main()` function is **required** for scripts with at least one other
 function. It MUST be the last function. The last non-comment line must call it:
 
-```
+```bash
 main "$@"
 ```
 
@@ -138,7 +138,7 @@ main "$@"
 ## Error Handling
 
 - All error messages go to STDERR. Use a helper function:
-  ```
+  ```bash
   err() { echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2; }
   ```
 - Always check return values with `if ! command; then ...` or `$?`.
@@ -150,7 +150,7 @@ All shell scripts MUST pass ShellCheck analysis.
 
 ## Rationale
 
-Shell scripts at Google are utility-grade: short, focused, and 
-defensive. These rules prevent the most common shell pitfalls 
-(unquoted variables, missing error checks, subshell leaks) and 
+Shell scripts at Google are utility-grade: short, focused, and
+defensive. These rules prevent the most common shell pitfalls
+(unquoted variables, missing error checks, subshell leaks) and
 keep scripts maintainable.
