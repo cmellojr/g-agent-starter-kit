@@ -77,7 +77,8 @@ Every module, public class, and public function MUST have a docstring.
 - Functions: Args, Returns, Raises (if applicable). Types in signature or doc.
 - Use `"""triple double quotes"""`.
 - Summary line must fit 80 chars.
-- Docstrings are **required** (Google rule). Inline comments explain **why**, not **what**.
+- Docstrings are **required** (Google rule). Inline comments explain **why**,
+  not **what**.
 
 ## Type Annotations
 
@@ -126,7 +127,7 @@ Avoid custom metaclasses, bytecode access, `__del__`, on-the-fly compilation,
 
 ## Main
 
-```
+```python
 def main() -> None:
     ...
 

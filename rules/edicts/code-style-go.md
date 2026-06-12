@@ -27,7 +27,8 @@ lastUpdated: 2026-06-03
 
 - `MixedCaps` / `mixedCaps` (camelCase). Never `snake_case`.
 - Exported names: `UpperCamelCase`. Unexported: `lowerCamelCase`.
-- Constants: `MaxLength` (exported), `maxLength` (unexported). Never `MAX_LENGTH`.
+- Constants: `MaxLength` (exported), `maxLength` (unexported). Never
+  `MAX_LENGTH`.
 - Local variables are considered unexported for capitalization.
 - Name length should reflect scope — shorter for local, longer for exported.
 - Names should not repeat package-level context.
@@ -35,14 +36,16 @@ lastUpdated: 2026-06-03
 ## Comments
 
 - Doc comments (`// Comment`) on all exported declarations.
-- Comments explain **why**, not **what**. The code should already speak for itself.
+- Comments explain **why**, not **what**. The code should already speak for
+  itself.
 - Use complete sentences with proper punctuation.
 
 ## Imports
 
 - Grouped: standard library, third-party, local. Blank line between groups.
 - Use meaningful import aliases only to resolve conflicts.
-- Avoid blank imports (`import _`) unless required by a generated file or driver.
+- Avoid blank imports (`import _`) unless required by a generated file or
+  driver.
 
 ## Least Mechanism
 

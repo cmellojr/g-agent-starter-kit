@@ -26,7 +26,8 @@ maintainable over time.
    - Is the design a natural fit for the system, or does it fight existing
      architecture?
    - Are the abstractions necessary? Prefer the simplest tool: language
-     built-in → standard library → well-established library → custom abstraction.
+     built-in → standard library → well-established library → custom
+     abstraction.
 
 3. **Evaluate simplicity.**
    - Could the code be simpler without losing correctness or performance?

@@ -3,3 +3,5 @@
 .env.example
 opencode.json
 .ignore
+.agents/
+__pycache__/

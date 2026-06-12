@@ -50,7 +50,8 @@ Names should convey meaning. Avoid abbreviations unless conventional.
 
 ## Imports
 
-- Group: `std`, external crates, `crate`, `self`/`super`. Blank line between groups.
+- Group: `std`, external crates, `crate`, `self`/`super`. Blank line between
+  groups.
 - Sort within each group (version-sorting).
 - Prefer `use crate::module::Type` over deep nesting.
 - Avoid `use *` — be explicit.
@@ -91,7 +92,8 @@ Names should convey meaning. Avoid abbreviations unless conventional.
 
 - Unit tests: `#[cfg(test)] mod tests` at bottom of file.
 - Integration tests: `tests/` directory.
-- Use descriptive test function names: `#[test] fn parse_valid_input_returns_ok()`.
+- Use descriptive test function names: `#[test] fn
+  parse_valid_input_returns_ok()`.
 - Prefer `assert_eq!`, `assert_ne!`, `matches!` over plain `assert!`.
 - Use `should_panic` only for validation logic; prefer `Result`-returning tests.
 
@@ -106,7 +108,8 @@ Names should convey meaning. Avoid abbreviations unless conventional.
 
 ## API Guidelines Checklist
 
-- The type implements standard traits (Debug, Clone, PartialEq) where meaningful.
+- The type implements standard traits (Debug, Clone, PartialEq) where
+  meaningful.
 - Conversions use `From`/`TryFrom`, not custom `fn to_*` / `fn from_*`.
 - Function signatures are clear and avoid boolean parameters (use enums).
 - Generic parameters have meaningful bounds.

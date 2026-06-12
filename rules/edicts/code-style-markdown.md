@@ -17,7 +17,7 @@ lastUpdated: 2026-06-03
 
 ## Document Layout
 
-```
+```markdown
 # Document Title
 
 Short introduction (1-3 sentences).
@@ -63,7 +63,7 @@ No trailing whitespace on any line. Use a trailing backslash to break lines
 ### Numbered Lists
 
 Use lazy numbering for long/multi-level lists:
-```
+```markdown
 1.  Foo.
 1.  Bar.
     1.  Foofoo.
@@ -74,7 +74,7 @@ Use explicit numbering for short, stable lists.
 
 ### Bullet Lists
 
-```
+```markdown
 *   Item with 4-space indent after the bullet.
     Wrapped text indented 4 spaces.
 *   Next item.
@@ -90,7 +90,7 @@ second level.
 ### Inline Code
 
 Use backticks for short code, field names, file types, paths:
-```
+```markdown
 Run `really_cool_script.sh arg`.
 Update your `README.md`.
 ```
@@ -109,7 +109,7 @@ syntax highlighting). Escape newlines in command snippets with `\`.
 ### Nesting in Lists
 
 Indent the code block 4 additional spaces from the list item:
-```
+```markdown
 *   Bullet.
 
     ```c++
@@ -126,7 +126,7 @@ Indent the code block 4 additional spaces from the list item:
 - Define reference links after their first use (before the next heading).
 - Reference links used in multiple sections go at the bottom of the document.
 
-```
+```markdown
 See the [style guide][style] for details.
 
 [style]: /styleguide/docguide/style.html
@@ -141,7 +141,7 @@ Use sparingly. Prefer simple screenshots. Always provide descriptive alt text.
 Use for tabular data that needs quick scanning. Avoid tables when a list
 would suffice. Use reference links inside tables to keep cell content short.
 
-```
+```markdown
 | Header 1 | Header 2 |
 |----------|----------|
 | Cell 1   | Cell 2   |
