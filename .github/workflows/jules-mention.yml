@@ -1,0 +1,21 @@
+name: Jules Mention
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  add-review-label:
+    if: |
+      contains(github.event.comment.body, '@jules') &&
+      github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Add jules-review label
+        run: |
+          gh pr edit "$PR" --add-label "jules-review"
+        env:
+          PR: ${{ github.event.issue.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
