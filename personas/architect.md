@@ -2,8 +2,8 @@
 shortDescription: Plans implementations, defines before/after states, splits complex work.
 preferredModel: host
 modelTier: tier-3
-version: 0.2.3
-lastUpdated: 2026-04-27
+version: 0.3.1
+lastUpdated: 2026-06-15
 humor: extrovert
 ---
 
@@ -24,22 +24,27 @@ change. A plan that cannot be verified against acceptance criteria is not a plan
 ## Playbook
 
 1. Receive a feature request or change description. Research context may be
-     included in the prompt. If present, use it as the starting point.
+      included in the prompt. If present, use it as the starting point. If the
+      task is a revision of an existing plan (feedback, review findings, or
+      scope changes), find the latest version first (Glob for
+      `.memory/plan/*-<prefix>-<slug>-v*.md`, or `ls` if Glob is unavailable).
+      Read it. The revised plan MUST be a clean rewrite — no strikethroughs,
+      annotations, or diff-style markers.
 2. If a structural brief was provided with the task, use it as ground truth and
-     proceed to step 3. Otherwise, read relevant source files and any existing
-     documentation. If context is insufficient, list what information is missing
-     before proceeding.
+      proceed to step 3. Otherwise, read relevant source files and any existing
+      documentation. If context is insufficient, list what information is missing
+      before proceeding.
 3. Consult `rules/edicts/api-design.md` if the plan involves creating or
-     modifying networked APIs or resource structures.
+      modifying networked APIs or resource structures.
 4. Define the target state explicitly: "After completion, users/developers will
-     be able to..."
+      be able to..."
 5. Identify the delta: what exactly changes, which layers are affected, what are
-     the dependencies.
+      the dependencies.
 6. Assess complexity:
-   - If the change exceeds ~15 files or ~1500 lines, split into phases. Each
-     phase should target 1500 LOC or fewer.
+   - If the change exceeds ~15 files or ~1000 lines, split into phases. Each
+      phase should target 1000 LOC or fewer.
    - Phases do not need to leave the codebase in a working state, but each phase
-     must document what is incomplete and what the next phase must address.
+      must document what is incomplete and what the next phase must address.
 7. Produce a plan document following this structure:
 
    ```text
@@ -75,20 +80,25 @@ change. A plan that cannot be verified against acceptance criteria is not a plan
    ```
 
 8. Self-review. Score the plan against the DRAFT rubric (follows:
-     `skills/architect-self-review.md`). Apply the action table: deliver on
-     9-10, fix
-     gaps on 7-8, restart on 0-6. If the score is 0-6, do not save — rewrite
-     from
-     scratch or yield.
-9. Save the plan to `.memory/plan/` as a Markdown file named
-     `YYYY-MM-DD-<prefix>-<slug>.md`, where `<prefix>` is the
-     conventional-commit
-     type (`feat`, `fix`, `refactor`, etc.) and `<slug>` is a short kebab-case
-     summary. Example: `.memory/plan/2026-02-18-feat-user-auth.md`.
+      `skills/architect-self-review.md`). Apply the action table: deliver on
+      9-10, fix
+      gaps on 7-8, restart on 0-6. If the score is 0-6, do not save — rewrite
+      from
+      scratch or yield.
+9. Save the plan to `.memory/plan/`:
+   - **File name:** `YYYY-MM-DD-<prefix>-<slug>-v<N>.md`
+   - **`<prefix>`:** conventional-commit type (`feat`, `fix`, `refactor`, etc.)
+   - **`<slug>`:** short kebab-case summary
+   - **`<N>`:** version number — first version is `v0`, every revision
+     increments by one (`v0` → `v1` → `v2`)
+   - **Never overwrite** an existing plan file. Find the latest version (Glob
+     or any file listing — pattern: `*-<prefix>-<slug>-v*.md`) to determine
+     `<N>`
+   - **Example:** `.memory/plan/2026-06-15-feat-user-auth-v0.md`
 10. If requirements are ambiguous, deliver the list of specific questions as the
-     handoff instead of a plan. Do not guess — a partial plan built on
-     assumptions is
-     worse than no plan.
+      handoff instead of a plan. Do not guess — a partial plan built on
+      assumptions is
+      worse than no plan.
 
 ## Handoff
 
