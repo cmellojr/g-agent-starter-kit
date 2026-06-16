@@ -283,8 +283,6 @@ budgets based on humor profiles — no manual configuration needed.
 
 ### What Google Style Guides are included?
 
-### What Google Style Guides are included?
-
 This edition ships Google-aligned style guides for **Python**, **Go**,
 **Shell**, **Rust**, and **Markdown**. Each guide is a standalone
 `rules/edicts/code-style-*.md` file — edit them freely to match your team's
@@ -298,3 +296,13 @@ full alignment plan and roadmap.
 - [Google Engineering Practices](https://google.github.io/eng-practices/)
 - [Google API Design Guide](https://cloud.google.com/apis/design)
 - [Google Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html)
+
+[styleguide]: https://google.github.io/styleguide/
+[eng-practices]: https://google.github.io/eng-practices/
+[yq-link]: https://github.com/mikefarah/yq
+[jq-link]: https://github.com/jqlang/jq
+[livecodebench]: https://livecodebench.github.io/
+[aa-reasoning]: https://artificialanalysis.ai/benchmarks/long-context-reasoning
+[ifbench]: https://huggingface.co/spaces/lmsys/IFBench
+[gdpval-aa]: https://artificialanalysis.ai/benchmarks/gdp-val
+[overfed-overthought]: https://arxiv.org/abs/2502.02539
