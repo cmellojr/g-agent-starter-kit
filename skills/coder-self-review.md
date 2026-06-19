@@ -79,7 +79,10 @@ _Will this code survive real-world input and error paths?_
 - **2** — All error paths handled or explicitly logged. Boundary conditions
   tested. No resource leaks. All external calls have timeouts. No incomplete
   markers. Backward compatibility verified or breaking changes documented in
-  handoff Decisions. Tests cover Good, Bad, and Ugly lenses per the plan.
+  handoff Decisions. Commit messages explain the technical reasoning behind what
+  changed and why, not just "Fixed bug" or "Updated code"; a commit message
+  lacking that reasoning drops the R score. Tests cover Good, Bad, and Ugly
+  lenses per the plan.
 
 ### A — ARCHITECTURE
 

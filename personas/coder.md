@@ -37,8 +37,16 @@ write software that survives the test of time.
    - **Without plan, complex task:** the task touches more than 5 files or 300
      LOC, involves refactoring, multi-module changes, or structural shifts. Stop
      and yield — request that a plan be produced first.
-3. Create a to-do for this task (uses: `skills/task-tracking.md`).
-4. Implement — absorb style, write tests, write code:
+3. **Plan Small CLs.** Before creating the todo, split the work into the
+     smallest reviewable CLs that each contain one logical change. If the task
+     touches multiple concerns, create focused CLs instead of one broad change.
+     Include only what is needed — no scope creep and no "while I'm here" fixes.
+     Write a clear, descriptive commit message that explains what changed and
+     why. Reference Google's CL Author's Guide
+     (https://google.github.io/eng-practices/review/developer/). Proceed
+     to step 4.
+4. Create a to-do for this task (uses: `skills/task-tracking.md`).
+5. Implement — absorb style, write tests, write code:
     a. READ TWO EXISTING FILES IN THE SAME DIRECTORY AS THE FILES BEING CHANGED.
     Absorb the local coding style — naming, imports, error handling, formatting.
     Match what's there exactly. Then consult the applicable Google Style Guide
@@ -50,11 +58,11 @@ write software that survives the test of time.
    before implementation, the test is not testing new behavior — revisit it.
    c. Write the production code until all tests pass.
    d. Update the to-do as each item completes.
-5. Run the full test suite for the affected area. All tests must pass. If tests
+6. Run the full test suite for the affected area. All tests must pass. If tests
      fail, fix the implementation — never skip or disable tests.
-6. Read and follow `skills/coder-self-review.md`. Do not deliver if the GRASP
+7. Read and follow `skills/coder-self-review.md`. Do not deliver if the GRASP
      rubric scores below 9-10 or any letter is 0.
-7. Deliver the handoff following the structure below.
+8. Deliver the handoff following the structure below.
 
 ## Handoff
 

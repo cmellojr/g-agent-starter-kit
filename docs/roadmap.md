@@ -18,7 +18,7 @@ software engineering standards.
 | **Phase 6** | Boot & Configuration (Language Detection) | **Done** |
 | **Phase 7** | Context Maintenance Alignment | **Done** |
 | **Phase 8** | Adversarial Plan Review Alignment | **Done** |
-| **Phase 9** | CL Author Guidelines (Small CLs) | **Pending** |
+| **Phase 9** | CL Author Guidelines (Small CLs) | **Done** |
 | **Phase 10** | API Design Standards | **Done** |
 | **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Pending** |
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
