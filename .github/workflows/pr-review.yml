@@ -52,10 +52,29 @@ jobs:
       - name: Post in-progress comment
         id: comment
         run: |
-          COMMENT_ID=$(gh pr comment "${{ steps.pr.outputs.number }}" \
-            --body "🤖 **Jules is reviewing this PR.** Results will appear here shortly (typically 1-5 minutes)." \
-            --repo "${{ github.repository }}" | jq -r '.id')
-          echo "id=$COMMENT_ID" >> $GITHUB_OUTPUT
+          set +e
+          # Use gh api to create the comment which returns JSON; capture full output for diagnostics
+          RESPONSE=$(gh api -X POST "repos/${{ github.repository }}/issues/${{ steps.pr.outputs.number }}/comments" \
+            -f body="🤖 **Jules is reviewing this PR.** Results will appear here shortly (typically 1-5 minutes)." 2>&1)
+          RC=$?
+          set -e
+
+          if [ $RC -ne 0 ]; then
+            echo "Warning: gh api failed to create comment (exit $RC). gh output:"
+            echo "$RESPONSE"
+            # Provide an empty output so later steps that expect an id do not fail the job unexpectedly
+            echo "id=" >> $GITHUB_OUTPUT
+          else
+            # Parse id safely; if parsing fails, emit diagnostics instead of letting jq exit the step
+            COMMENT_ID=$(echo "$RESPONSE" | jq -r '.id' 2>/dev/null || true)
+            if [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" = "null" ]; then
+              echo "Warning: could not parse comment id from gh response:"
+              echo "$RESPONSE"
+              echo "id=" >> $GITHUB_OUTPUT
+            else
+              echo "id=$COMMENT_ID" >> $GITHUB_OUTPUT
+            fi
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -108,9 +127,9 @@ jobs:
                 echo ""
               fi
               echo "# UNTRUSTED: Diff"
-              echo '\`\`\`diff'
+              echo '\'\'\'diff'
               echo "$DIFF"
-              echo '\`\`\`'
+              echo '\'\'\'"
               echo ""
               echo "# What to review"
               echo "Focus ONLY on lines changed in this diff. Evaluate for:"
