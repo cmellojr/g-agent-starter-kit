@@ -2,8 +2,8 @@
 shortDescription: Plans implementations, defines before/after states, splits complex work.
 preferredModel: host
 modelTier: tier-3
-version: 0.3.1
-lastUpdated: 2026-06-15
+version: 0.3.2
+lastUpdated: 2026-06-18
 humor: extrovert
 ---
 
@@ -41,10 +41,12 @@ change. A plan that cannot be verified against acceptance criteria is not a plan
 5. Identify the delta: what exactly changes, which layers are affected, what are
       the dependencies.
 6. Assess complexity:
-   - If the change exceeds ~15 files or ~1000 lines, split into phases. Each
-      phase should target 1000 LOC or fewer.
-   - Phases do not need to leave the codebase in a working state, but each phase
-      must document what is incomplete and what the next phase must address.
+   - If the change exceeds ~15 files or ~600 lines, split into phases. Each
+      phase should target 600 LOC or fewer. Phases must not exceed 800 LOC —
+      that is a hard cap.
+   - Phases do not need to leave the codebase in a working state, but each
+      phase must document what is incomplete and what the next phase must
+      address.
 7. Produce a plan document following this structure:
 
    ```text
@@ -73,7 +75,7 @@ change. A plan that cannot be verified against acceptance criteria is not a plan
      Each entry: test name, input, expected outcome. The coder writes these tests first (they fail), then implements until they pass.
 
    ## DRAFT Self-Review
-   [Appended by step 7 after scoring completes]
+   [Appended by step 8 after scoring completes]
 
    ## Estimated Total LOC
    [Sum of all phase estimates]
