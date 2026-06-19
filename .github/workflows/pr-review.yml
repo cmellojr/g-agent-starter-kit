@@ -161,31 +161,63 @@ jobs:
       - name: Invoke Jules API
         id: jules
         run: |
+          set +e
           RESPONSE=$(curl -s -X POST "https://jules.googleapis.com/v1alpha/sessions" \
             -H "Content-Type: application/json" \
             -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
-            -d @jules_payload.json)
-          SESSION_ID=$(echo "$RESPONSE" | jq -r '.id')
-          SESSION_NAME=$(echo "$RESPONSE" | jq -r '.name')
-          echo "Session created: $SESSION_NAME (id: $SESSION_ID)"
-          echo "id=$SESSION_ID" >> $GITHUB_OUTPUT
+            -d @jules_payload.json 2>&1)
+          RC=$?
+          set -e
+
+          if [ $RC -ne 0 ]; then
+            echo "Warning: curl failed to create Jules session (exit $RC). Response:"
+            echo "$RESPONSE"
+            echo "id=" >> $GITHUB_OUTPUT
+          else
+            SESSION_ID=$(echo "$RESPONSE" | jq -r '.id' 2>/dev/null || true)
+            SESSION_NAME=$(echo "$RESPONSE" | jq -r '.name' 2>/dev/null || true)
+            if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = "null" ]; then
+              echo "Warning: could not parse session id from response:"
+              echo "$RESPONSE"
+              echo "id=" >> $GITHUB_OUTPUT
+            else
+              echo "Session created: $SESSION_NAME (id: $SESSION_ID)"
+              echo "id=$SESSION_ID" >> $GITHUB_OUTPUT
+            fi
+          fi
 
       - name: Poll for review completion
         id: poll
         run: |
           SESSION_ID="${{ steps.jules.outputs.id }}"
+          if [ -z "$SESSION_ID" ]; then
+            echo "No session ID available from Jules; skipping poll."
+            echo "review=Jules did not return a review within the timeout." >> $GITHUB_OUTPUT
+            echo "verdict=error" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           DEADLINE=$(( $(date +%s) + 900 ))
           REVIEW=""
           POLL_INTERVAL=20
           while [ $(date +%s) -lt $DEADLINE ]; do
-            STATE=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
-              "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" | jq -r '.state')
+            # Fetch session state safely
+            STATE_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+              "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" 2>&1)
+            STATE=$(echo "$STATE_RESP" | jq -r '.state' 2>/dev/null || true)
+            if [ -z "$STATE" ]; then
+              echo "Warning: failed to parse session state from response:"
+              echo "$STATE_RESP"
+              sleep $POLL_INTERVAL
+              continue
+            fi
+
             echo "Session state: $STATE"
             case "$STATE" in
               COMPLETED)
-                ACTIVITIES=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
-                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID/activities?pageSize=50")
-                REVIEW=$(echo "$ACTIVITIES" | jq -r '[.activities[] | select(.agentMessaged != null) | .agentMessaged.agentMessage] | last')
+                ACTIVITIES_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID/activities?pageSize=50" 2>&1)
+                REVIEW=$(echo "$ACTIVITIES_RESP" | jq -r '[.activities[] | select(.agentMessaged != null) | .agentMessaged.agentMessage] | last' 2>/dev/null || true)
                 if [ -n "$REVIEW" ] && [ "$REVIEW" != "null" ]; then
                   echo "Review obtained (${#REVIEW} chars)"
                   echo "review<<JULES_EOF" >> $GITHUB_OUTPUT
@@ -195,12 +227,13 @@ jobs:
                   echo "verdict=${VERDICT:-comment}" >> $GITHUB_OUTPUT
                   break
                 fi
-                echo "No agentMessaged found, waiting…"
+                echo "No agentMessaged found in activities, waiting…"
                 POLL_INTERVAL=20
                 ;;
               FAILED)
-                REASON=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
-                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" | jq -r '.stateReason // "Unknown"')
+                REASON_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" 2>&1)
+                REASON=$(echo "$REASON_RESP" | jq -r '.stateReason // "Unknown"' 2>/dev/null || true)
                 echo "Session failed: $REASON"
                 echo "review=Session failed: $REASON" >> $GITHUB_OUTPUT
                 echo "verdict=error" >> $GITHUB_OUTPUT
@@ -212,7 +245,7 @@ jobs:
                   -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
                   -H "Content-Type: application/json" \
                   -d '{}' \
-                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID:approvePlan" > /dev/null
+                  "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID:approvePlan" > /dev/null || true
                 POLL_INTERVAL=20
                 ;;
             esac
