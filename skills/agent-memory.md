@@ -1,8 +1,8 @@
 ---
 shortDescription: Long-term and session memory across sessions.
 usedBy: [maestro]
-version: 0.2.1
-lastUpdated: 2026-04-25
+version: 0.3.0
+lastUpdated: 2026-06-23
 ---
 
 ## Purpose
@@ -18,11 +18,7 @@ trail.
 
 ## Procedure
 
-1. **Check for the memory directory.** Look for `.memory/` at the project root.
-     If it does not exist, create it with `long-term.md` (initialized with the
-     section headers from the long-term schema below) and a `session/`
-     subdirectory
-     (empty).
+1. **Check for the memory directory.** Look for `.memory/` at the project root. If it does not exist, create it with `long-term.md` (initialized with the section headers from the long-term schema below) and subdirectories: `session/`, `plan/`, `todo/`, `reviews/` (all empty).
 
 2. **Read session memory at session start.** List all files in
      `.memory/session/`. For each file with status `paused` or `in-progress`,
@@ -109,6 +105,10 @@ trail.
 ## Discovered Issues
 
 - <one issue per line — pre-existing bugs, tech debt, or code smells found during work but outside the current task's scope>
+
+## Observations
+
+- <one observation per line — opinions, concerns, patterns, or suggestions from persona handoffs that fall outside the deliverable but may matter later>
 
 ## Project Notes
 
