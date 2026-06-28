@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.12
-# @updated      2026-06-24
+# @version      0.6.13
+# @updated      2026-06-25
 #
 # ── Thinking/Reasoning Configuration ─────────────────────────────────────────
 #
@@ -354,6 +354,10 @@ applyPermissionProfile() {
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -366,6 +370,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -440,11 +448,16 @@ applyPermissionProfile() {
       "git merge-base *": "allow",
       "git describe *": "allow",
       "diff *": "allow",
-      "stat *": "allow"
+      "stat *": "allow",
+      "mkdir *": "allow"
     },
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -455,6 +468,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -542,6 +559,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -616,11 +637,16 @@ applyPermissionProfile() {
       "git merge-base *": "allow",
       "git describe *": "allow",
       "diff *": "allow",
-      "stat *": "allow"
+      "stat *": "allow",
+      "mkdir *": "allow"
     },
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -631,6 +657,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -700,6 +730,10 @@ applyPermissionProfile() {
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -712,6 +746,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }

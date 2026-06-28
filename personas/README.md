@@ -31,8 +31,8 @@ Lowercase, short name: `reviewer.md`, `architect.md`
 ### Frontmatter
 
 - **`shortDescription`** (Required) — `Reviews code for quality and security`
-- **`preferredModel`** (Optional) — `host`, `claude`, `codex`, `cursor`, `qwen`,
-  `gemini`, or `[claude, codex]`
+- **`preferredModel`** (Optional) — `host`, `claude`, `codex`, `cursor`,
+  `qwen`, `deepseek`, `gemini`, or `[claude, codex]`
 - **`modelTier`** (Required) — `tier-2`
 - **`version`** (Required) — `0.1.0`
 - **`lastUpdated`** (Required) — `2026-02-04`

@@ -1,8 +1,8 @@
 ---
 shortDescription: Assembles sub-agent prompts with task brief and routes to the correct provider.
 usedBy: [maestro]
-version: 0.3.0
-lastUpdated: 2026-06-23
+version: 0.4.0
+lastUpdated: 2026-06-26
 ---
 
 ## Purpose
@@ -178,19 +178,14 @@ providers:
     tier-3: opencode-go/deepseek-v4-pro
   gemini:
     cli: gemini
-    tier-1: gemini-2.5-flash
-    tier-2: gemini-2.5-pro
+    tier-1: gemini-3.5-flash
+    tier-2: gemini-3.5-flash
     tier-3: gemini-3.1-pro-preview
   host:
     cli: null
     tier-1: null
     tier-2: null
     tier-3: null
-  qwen:
-    cli: opencode
-    tier-1: bailian-coding-plan/qwen3-coder-next
-    tier-2: bailian-coding-plan/qwen3.5-plus
-    tier-3: bailian-coding-plan/qwen3.6-plus
 ```
 
 Tier classes: **tier-1** = fast/cheap, **tier-2** = balanced, **tier-3** =

@@ -1,6 +1,37 @@
 # Changelog
 
 ```log
+0.9.2 - 2026/06/26
+refactor(dispatch): consolidate providers to one per CLI — merge qwen into deepseek entry; users swap model names instead of adding new provider entries
+docs(readme): update provider references — simplify Customization and FAQ sections to reflect one-per-CLI structure; mention OpenCode Go as coding plan for deepseek family
+docs(contributing): add provider list policy — models are examples, not a registry; PRs/issues adding providers will be declined
+
+0.9.1 - 2026/06/26
+refactor(self-review): improve DRAFT rubric — add scope mode, goal, assumptions, rule contradictions, finalize sections, planned commits; add gather-evidence step; restructure procedure
+refactor(reviewer): restructure plan adversarial review with progress file pattern — 8 review phases with disk-write gates; add completeness checks; align acceptance criteria and test spec checks to main framework
+
+0.9.0 - 2026/06/26
+refactor(architect): progressive plan construction with per-phase delta and complexity — playbook restructured with disk writes between each step; step 6 is rough phase outline, step 7 is per-phase loop (name methods, stress-test, complexity check, build); plan file is external memory
+refactor(architect): replace global before/after with per-phase before/after
+refactor(architect): add information flow trace — traces request path from user entry through layers and back
+refactor(architect): add explicit method signatures per phase
+refactor(architect): reference files per phase for Coder style matching
+refactor(architect): cap test specs at 1 per lens per method
+refactor(architect): expand Goal from one-sentence to problem-why-success
+refactor(coder): step 5a checks plan reference files first
+refactor(self-review): update DRAFT rubric for new plan structure
+refactor(reviewer): update adversarial plan review for new structure
+
+0.8.8 - 2026/06/25
+feat(configure-cli): add explicit .memory subdirectory permissions — .memory/plan/*, .memory/todo/*, .memory/reviews/*, .memory/session/* added to edit and external_directory for all persona profiles; agents no longer prompt for permission to write to .memory subdirectories
+feat(configure-cli): add mkdir permission to architect and reviewer — all agents now have mkdir * allowed; previously architect and reviewer were denied directory creation
+
+0.8.7 - 2026/06/25
+fix(review-loop): include untracked files in LOC measurement — LOC count command now adds `git ls-files --others --exclude-standard` line counts to `git diff HEAD --numstat` totals; new files were invisible to review tier selection
+
+0.8.6 - 2026/06/25
+fix(reviewer): enforce single-pass execution with immediate disk writes — playbook step 4 creates all progress files before reading any code, step 5 executes one complete pass at a time with findings written to disk immediately; red lines added to prevent holding findings in memory and starting next pass before current pass is fully written
+
 0.8.5 - 2026/06/24
 fix(configure-cli): robotic humor thinking budget 0→4096 — thinking re-enabled with minimal budget instead of disabled; reasoning effort mapped to low instead of none
 fix(configure-cli): introvert thinking budget 10240→8192 — aligned with industry effort-level estimates for hard tasks
