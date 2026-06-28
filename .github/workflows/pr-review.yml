@@ -94,6 +94,7 @@ jobs:
 
       - name: Build prompt
         run: |
+          set -e
           RULES=""
           if [ -f .github/jules-review-rules.md ]; then
             RULES=$(cat .github/jules-review-rules.md)
@@ -102,49 +103,61 @@ jobs:
           TRUNCATED_NOTE=$(cat truncated_note.txt 2>/dev/null || echo "")
           PR_TITLE="$(gh pr view "${{ steps.pr.outputs.number }}" --json title --jq '.title' 2>/dev/null || echo '')"
           PR_BODY="$(gh pr view "${{ steps.pr.outputs.number }}" --json body --jq '.body' 2>/dev/null || echo '')"
+
+          cat > prompt.txt <<EOF
+          You are an expert code reviewer. Review the pull request below.
+
+          # Repository
+          ${{ github.repository }}
+
+          # UNTRUSTED: PR title
+          $PR_TITLE
+
+          # UNTRUSTED: PR description
+          ${PR_BODY:-(no description)}
+
+          # PR ## ${{ steps.pr.outputs.number }}
+
+          EOF
+
+          if [ -n "$RULES" ]; then
+            cat >> prompt.txt <<EOF
+          # UNTRUSTED: Project-specific review rules
+          $RULES
+
+          EOF
+          fi
+
+          if [ -n "$TRUNCATED_NOTE" ]; then
+            cat >> prompt.txt <<EOF
+          NOTE: $TRUNCATED_NOTE
+
+          EOF
+          fi
+
+          cat >> prompt.txt <<EOF
+          # UNTRUSTED: Diff
+          ```diff
+          $DIFF
+          ```
+
+          # What to review
+          Focus ONLY on lines changed in this diff. Evaluate for:
+
+          - **Correctness**: logic errors, null/undefined handling, race conditions, off-by-ones, broken APIs, edge cases.
+          - **Security**: injection risks (SQL/command/XSS), hardcoded secrets, insecure crypto, auth/authz flaws, sensitive data in logs or URLs.
+          - **Reliability**: missing error handling where it matters, unhandled promise rejections, resource leaks.
+          - **Maintainability**: duplication, unclear naming, dead code, violated project rules above.
+
+          # What NOT to flag
+          Skip linter-catchable issues, pre-existing issues in unchanged lines, pedantic nitpicks, and hypothetical problems.
+
+          Tag each finding as [BLOCKING], [WARN], or [NIT].
+          End with EXACTLY one line: VERDICT: approve | VERDICT: comment | VERDICT: block
+          EOF
+
           jq -n \
-            --arg prompt "$(
-              echo "You are an expert code reviewer. Review the pull request below."
-              echo ""
-              echo "# Repository"
-              echo "${{ github.repository }}"
-              echo ""
-              echo "# UNTRUSTED: PR title"
-              echo "$PR_TITLE"
-              echo ""
-              echo "# UNTRUSTED: PR description"
-              echo "${PR_BODY:-(no description)}"
-              echo ""
-              echo "# PR ## ${{ steps.pr.outputs.number }}"
-              echo ""
-              if [ -n "$RULES" ]; then
-                echo "# UNTRUSTED: Project-specific review rules"
-                echo "$RULES"
-                echo ""
-              fi
-              if [ -n "$TRUNCATED_NOTE" ]; then
-                echo "NOTE: $TRUNCATED_NOTE"
-                echo ""
-              fi
-              echo "# UNTRUSTED: Diff"
-              echo '\'\'\'diff'
-              echo "$DIFF"
-              echo '\'\'\'"
-              echo ""
-              echo "# What to review"
-              echo "Focus ONLY on lines changed in this diff. Evaluate for:"
-              echo ""
-              echo "- **Correctness**: logic errors, null/undefined handling, race conditions, off-by-ones, broken APIs, edge cases."
-              echo "- **Security**: injection risks (SQL/command/XSS), hardcoded secrets, insecure crypto, auth/authz flaws, sensitive data in logs or URLs."
-              echo "- **Reliability**: missing error handling where it matters, unhandled promise rejections, resource leaks."
-              echo "- **Maintainability**: duplication, unclear naming, dead code, violated project rules above."
-              echo ""
-              echo "# What NOT to flag"
-              echo "Skip linter-catchable issues, pre-existing issues in unchanged lines, pedantic nitpicks, and hypothetical problems."
-              echo ""
-              echo "Tag each finding as [BLOCKING], [WARN], or [NIT]."
-              echo "End with EXACTLY one line: VERDICT: approve | VERDICT: comment | VERDICT: block"
-            )" \
+            --arg prompt "$(cat prompt.txt)" \
             --arg source "sources/github/${{ github.repository }}" \
             '{
               prompt: $prompt,
