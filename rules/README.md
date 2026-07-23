@@ -6,29 +6,15 @@ multiple pages to explain is likely a skill in disguise.
 ## Rule Hierarchy
 
 - **Commandments** (`rules/commandments/`) — sacred, absolute, never bypassed.
-- **Edicts** (`rules/edicts/`) — authoritative within their scope, shall not be
-  bent.
-- **Counsel** (`rules/counsel/`) — wise guidance, may be deviated from with
-  justification.
+- **Code rules** (`rules/code/`) — authoritative within their scope, shall not be bent.
+- **Project guidance** — supporting direction for repository-specific behavior.
 
 ## Available Rules
 
-- **`commandments/git`** — Google-style commit messages, branch naming, commit
-  style (coding)
-- **`edicts/code-quality`** — Cross-language quality conventions: KISS, DRY,
-  SRP, error handling, data trust boundary (coding)
-- **`edicts/code-debugging`** — Root cause before fix, three-strike rule,
-  anti-rationalization (coding)
-- **`edicts/code-style-python`** — Google Python Style Guide: 80 cols, 4 spaces,
-  snake_case, type annotations, docstrings (coding-python)
-- **`edicts/code-style-go`** — Google Go Style Guide: gofmt, MixedCaps, least
-  mechanism, clarity > concision (coding-go)
-- **`edicts/code-style-shell`** — Google Shell Style Guide: Bash, 2 spaces, 80
-  cols, local, main(), ShellCheck (coding-shell)
-- **`edicts/code-style-rust`** — Rust Style Guide: rustfmt, 4 spaces, 100 cols,
-  Result, ownership, traits (coding-rust)
-- **`edicts/code-style-markdown`** — Google Markdown Style Guide: 80 cols, ATX
-  headings, fenced code blocks, reference links (coding-markdown)
+- **`commandments/git`** — Git commit and branch policy for this repository.
+- **`code/quality`** — Universal naming, testing, and quality conventions (coding)
+- **`code/debugging`** — Root cause before fix, three-strike rule, anti-rationalization (coding)
+- **`git`** — Conventional commits, branch naming, commit style (coding)
 
 ## File Naming
 
@@ -36,7 +22,7 @@ Lowercase, hyphenated. Scoped rules are prefixed with the persona or domain they
 target: `coder-formatting.md`, not `formatting.md`. Universal rules carry no
 prefix.
 
-## Schema (v0.1.0 // 2026-03-04)
+## Schema (v0.2.0 // 2026-07-09)
 
 ### Frontmatter
 

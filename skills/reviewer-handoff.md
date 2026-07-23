@@ -42,10 +42,4 @@ can act on findings without re-reading the review.
      external tool unavailable).
    - `fail` — one or more blockers.
 
-3. **Append planned commits on failure.** When the verdict is `fail` and the
-     type is `code`, add a "Planned Commits" section after Notes with
-     conventional-commit messages (follows: `rules/commandments/git.md`)
-     describing
-     the fixes being requested. This gives the next step ready-made commit
-     messages
-     once the fixes land.
+3. **Append planned commits on failure.** When the verdict is `fail` and the type is `code`, add a "Planned Commits" section after Notes with conventional-commit messages (follows: `rules/git.md`) describing the fixes being requested. This gives the next step ready-made commit messages once the fixes land.
