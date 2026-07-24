@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+0.9.9 - 2026/07/24
+refactor(agents): add audience-directive block to Readability Over Performance — frame the compiler as syntax validator (already solved) and the 3am stranger as the audience; rewrite Comments Are a Signal as confession-not-tool with restructure-first default and demonstrate-the-attempt requirement; widen Locality of Behavior to cover sole-caller helpers (nested when trivial wrapping, method on same type when real transformation logic); reframe Naming preamble to restructure-before-comment
+feat(agents): add Honesty and Ambiguity section — say so when a request is flawed, proceed on reversible actions, stop only for destructive/irreversible, escalate with structure for non-obvious trade-offs
+refactor(agents): naming — prefer responsibility/design-pattern noun suffix over verb-prefixed action names for functions with real responsibility; tool-swap example uses noun-suffix name
+refactor(agents): logging — log entries MUST NOT contain secrets/tokens/PII, debug-level exception; testing — scope infrastructure tests to test/sandbox endpoints, dedup setup/teardown guidance
+feat(agents): add Review Trust section — passing automated check is evidence not proof, manually verify where blind spots have consequences
+
 0.9.8 - 2026/07/20
 refactor(agents): strengthen AGENTS.md distillation of rules and skills — restore imperative force lost in distillation; add Style Proximity section (read sibling files, match local convention) required by coder-self-review and code-quality-review skills; add single-letter variable ban, Readability Over Performance (KISS), Native Tooling, branch name prefixes, Schema Changes callout; add advisory rules for no-else (metalanguages exception), squash/rebase avoidance, Hardcoding, Dependency Audit on Feature Change, testing setup/teardown inline, Frontend accessibility
 

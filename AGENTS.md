@@ -2,6 +2,10 @@
 
 A style book for code that reads itself. Internalize the reasoning, apply the judgment, write code that the next reader can follow without reverse-engineering.
 
+## Honesty and Ambiguity
+
+If a request is flawed, say so — agreeable silence produces bad code. When the user assigns a task, proceed on any non-destructive reversible action needed to complete it; git is the safety net, stopping to confirm the obvious wastes the session. Stop only for destructive or irreversible actions (delete repository, drop database, force-push to main), or genuinely non-obvious trade-offs. When intent could mean different things, escalate with structure: one problem, three options with trade-offs, one recommendation with reason. When the ambiguity only changes how (not what), proceed inline with a documented default.
+
 ## Code Shape
 
 Getting function boundaries right means the reader never reassembles scattered logic or untangles mixed concerns. Three questions: what to extract, what to unify, what to keep together.
@@ -20,11 +24,15 @@ One reason to change per function, module, file. A function that parses input an
 
 ### Readability Over Performance
 
+<audience-directive>
+You are not writing code for the compiler. The compiler validates syntax and will tell you when you got it wrong — that is its only job, and it is already solved. You are writing code for a stranger at 3am who has never seen this codebase, does not have your context, and must fix a bug in it without breaking anything else. That stranger is your audience. Every choice you make — a name, a comment, a data structure, an inlined expression — answers to one question: will the stranger understand this without reverse-engineering it, without reading documentation, without doing arithmetic in their head? If the answer is no, the code is wrong, regardless of whether it compiles. Compiling is the floor, not the goal. Readable-by-a-stranger-at-3am is the goal.
+</audience-directive>
+
 When choosing between a clever solution and a simple one, prefer simple. Clever patterns — `Array.from` with callbacks, Fisher-Yates shuffles, bitwise hacks, dense one-liners, or any construct that requires prior knowledge to understand — should be avoided. Use plain loops and simple logic. Every line should read as plain English to a human who has never seen the codebase. Performance optimization is justified only when a measured bottleneck demands it.
 
 ## Naming and Communication
 
-The reader should learn what a variable holds or a function does from the name without inspecting the body. When the name fails, a comment takes its place — and a comment that explains what the code does is compensation for a name that failed. Logging is the third channel: the message that surfaces at 3am is a search key, not prose.
+The reader should learn what a variable holds or a function does from the name without inspecting the body. When the name fails, restructure before reaching for a comment — a comment that explains what the code does is the last resort, not the first tool. Logging is the third channel: the message that surfaces at 3am is a search key, not prose.
 
 ### Naming
 
@@ -32,19 +40,19 @@ Names convey intention and purpose, not content. `runIndex` says it's a loop cou
 
 - Compound names when a single word lacks specificity (`collectionName`, not `name`).
 - Single-letter names are forbidden — no `i`, `j`, `n`, `e`. Every variable needs a descriptive name.
-- Functions describe what they produce, not how they produce it (`resolveLoadoutPaths`, not `emitYqUnionQuery`).
-- Names survive a tool swap (`fetchMessagingUsers`, not `fetchSlackUsers`).
+- Functions describe what they produce, not how they produce it. For functions carrying real responsibility, prefer a responsibility or design-pattern noun suffix (`loadoutPathsResolver`, `userFactory`) over a verb-prefixed action name.
+- Names survive a tool swap (`messagingUsersReader`, not `slackUsersReader`).
 - Booleans answer a question in their name (`IsAdmin`, `HasSession`, `ShouldRetry`).
 - Type in the name when ambiguous from context (`rawRandomInteger`, not `rawRandomNumber`).
 - Parameters make sense from the signature alone, without reading the call site.
 
 ### Comments Are a Signal
 
-When code needs a comment to explain what it does, the names or the structure failed — the comment is compensation. A comment earns its place when an external constraint forces a decision that naming and structure cannot clarify — a workaround for an upstream bug, a performance choice that contradicts the readable version. The comment explains why, never what.
+A comment is a confession, not a tool. The default is no comment: restructure first (name the concept, extract the translation, absorb the contract into a type), and only when the code is still unreadable to the stranger take the comment as the lesser poison — a stale comment beats unreadable code. An external constraint (a stdlib contract, a format detail, an upstream bug) is the prompt to absorb it into a structure, not permission to stop. Claiming no structure works without naming what you tried — that's the dodge this rule exists to catch. The comment explains why, never what.
 
 ### Logging
 
-PascalCase without spaces — `UserCreated`, `PaymentFailed`, `TokenExpired`. Greppable, unambiguous word boundaries. A log message is a search key.
+PascalCase without spaces — `UserCreated`, `PaymentFailed`, `TokenExpired`. Greppable, unambiguous word boundaries. A log message is a search key. Log entries MUST NOT contain secrets, tokens, or PII — the message that helps at 3am must not be the message that leaks at 9am. Debug-level logs (`slog.Debug`, equivalent) are the exception: they appear only when debug mode is enabled, so PII is acceptable there.
 
 ## Flow and Structure
 
@@ -61,6 +69,8 @@ Visible assignment: when a function returns a value, the reader sees where it la
 - Functions ordered top-down: a function is defined above its first caller, so the reader understands each piece before meeting the code that uses it.
 - Constructors sit immediately after their type declaration — the type and its constructor are one concept.
 - Lines kept short enough to read without horizontal scrolling.
+
+Locality of behavior: if a function takes a struct as its first argument and reads or transforms its fields, it belongs as a method on that struct, not a package-level function. A function whose only caller is a method belongs with that caller — nested within it when the body is a trivial wrapping, or as a method on the same type when it carries real transformation logic — not at package level serving one consumer. Exceptions: constructors (`NewFoo`), functions that create a struct from external input, and genuinely generic utilities that work across multiple unrelated types.
 
 ### Style Proximity
 
@@ -103,9 +113,9 @@ Tests and debugging exist to catch what the author missed — they fail their pu
 
 ### Testing as Behavior Verification
 
-Tests verify behavior: given this input, the output is this. A test that breaks when internals are refactored without changing behavior is testing the wrong thing — it's a maintenance burden wearing a safety net's clothes. Table-driven tests express the variation cleanly. Infrastructure tests hit real external APIs because mocking at the boundary hides the integration failure that's the whole point of testing there. Secrets stay out of tests. Each test file owns its setup and teardown inline — independence across files, order-dependence allowed within a file when it reflects a natural workflow.
+Tests verify behavior: given this input, the output is this. A test that breaks when internals are refactored without changing behavior is testing the wrong thing — it's a maintenance burden wearing a safety net's clothes. Table-driven tests express the variation cleanly. Infrastructure tests hit real external APIs (test/sandbox endpoints, never production) because mocking at the boundary hides the integration failure that's the whole point of testing there. Secrets stay out of tests. Each test file owns its setup and teardown inline — independence across files, order-dependence allowed within a file when it reflects a natural workflow.
 
-Each test file should handle its own setup and teardown inline — a test that leaves state behind poisons the next test's assumptions. Test setup helpers belong inside the test function (as a closure or local function), prefixed with the test name, or encapsulated in a struct — not as package-level functions. When helpers are extracted to the file level, setup helpers go above the test and teardown goes at the end of the file.
+Test setup helpers belong inside the test function (as a closure or local function), prefixed with the test name, or encapsulated in a struct — not as package-level functions. When helpers are extracted to the file level, setup helpers go above the test and teardown goes at the end of the file. A test that leaves state behind poisons the next test's assumptions.
 
 ### Debugging as Investigation
 
@@ -114,6 +124,10 @@ Root cause before fix. Read the error, reproduce the failure, check recent chang
 ### Code Review
 
 Review focuses on three areas, each with its own skill: coherence — logic, correctness, structural alignment (`skills/code-coherence-review.md`); quality — coding standards, naming, style (`skills/code-quality-review.md`); security — OWASP, attack surface, data flow (`skills/code-sec-review.md`). A change touching auth, external input, or data flow always warrants review; a one-line typo fix does not. For large changes, split the review — one pass per focus — so each reviewer goes deep. Findings must be verified against the codebase before acting on them. A reviewer reads and reports — it creates no files in the codebase; all findings belong in the review handoff.
+
+### Review Trust
+
+A passing automated check is evidence, not proof. Linters, test suites, and ref checkers have blind spots — stale patterns, generated files, paths the tool doesn't cover. Manually verify the same category the tool checked wherever the tool's blind spot would have consequences — renames, path moves, permission and auth changes, data migrations are the usual suspects, but the test is consequence, not category. A reviewer reads and reports — it creates no files in the codebase; all findings belong in the review handoff.
 
 ## Native Tooling
 
