@@ -1,6 +1,9 @@
 # G-Agent Starter Kit — Google Style Edition
 
-> Describe what you need in plain language. Work directly in quick mode, or boot the Maestro to break complex tasks into specialized sub-agent work. The Maestro routes each task to specialized personas and checks it against the relevant Google Style Guides.
+> Describe what you need in plain language. Work directly in quick mode, or boot
+the Maestro to break complex tasks into specialized sub-agent work. The Maestro
+routes each task to specialized personas and checks it against the relevant
+Google Style Guides.
 
 [TOC]
 
@@ -59,7 +62,8 @@ the last one stopped.
    git clone https://github.com/cmellojr/g-agent-starter-kit.git .agents
    ```
 
-The `.agents/` directory lives inside your project — it's not a plugin you install once. Each project gets its own copy of the framework.
+The `.agents/` directory lives inside your project — it's not a plugin you
+install once. Each project gets its own copy of the framework.
 
 2. Symlink the entry file to the project root:
 
@@ -67,18 +71,31 @@ The `.agents/` directory lives inside your project — it's not a plugin you ins
    ln -s .agents/AGENTS.md AGENTS.md
    ```
 
-3. Start the AI agent interface (e.g., `claude`, `opencode`, or whatever CLI/TUI you use).
-4. As the first message of every session, choose a mode:
-   - **Full orchestration:** boot the Maestro to decompose, plan, dispatch, and review multi-step work:
+3. Start the AI agent interface (e.g., `claude`, `opencode`, or whatever CLI/TUI
+   you use).
 
-     ```
+4. As the first message of every session, choose a mode:
+
+   - **Full orchestration:** boot the Maestro to decompose, plan, dispatch, and
+     review multi-step work:
+
+     ```text
      Please comply with @.agents/ENTRYPOINT.md file.
      ```
 
-   - **Quick work (default):** just type your request. The CLI auto-loads `AGENTS.md` — your style book is already in context. No boot phrase needed.
-5. Describe what you want to build, fix, or change. In full orchestration mode, the Maestro breaks it down, dispatches to specialized personas (Architect plans, Coder implements, Reviewer validates), and delivers the result.
-6. On first run in full orchestration mode, the Maestro automatically dispatches the Contextualizer to map the codebase before doing anything else.
-7. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
+   - **Quick work (default):** just type your request. The CLI auto-loads
+     `AGENTS.md` — your style book is already in context. No boot phrase needed.
+
+5. Describe what you want to build, fix, or change. In full orchestration mode,
+   the Maestro breaks it down, dispatches to specialized personas (Architect
+   plans, Coder implements, Reviewer validates), and delivers the result.
+
+6. On first run in full orchestration mode, the Maestro automatically
+   dispatches the Contextualizer to map the codebase before doing anything
+   else.
+
+7. (Optional) Customize — add personas, rules, skills, and providers to fit your
+   project (see Customization below).
 
 ### OpenCode Configuration
 
@@ -115,10 +132,16 @@ docs/        roadmap.md — alignment plan and roadmap
 ## Rules Hierarchy
 
 - **Commandments** — absolute, never bypassed
-- **Code rules** — authoritative within scope, applicable to implementation and review
+- **Code rules** — authoritative within scope, applicable to implementation and
+  review
 - **Other guidance** — supporting context and project-specific direction
 
-The `rules/code/` directory includes the language-specific Google Style Guides and related code-quality guidance (`code-style-python.md`, `code-style-go.md`, `code-style-shell.md`, `code-style-rust.md`, `code-style-markdown.md`, `debugging.md`, `quality.md`). These are the authoritative reference for coding conventions — code is evaluated against them during the Quality review pass.
+The `rules/code/` directory includes the language-specific Google Style Guides
+and related code-quality guidance (`code-style-python.md`, `code-style-go.md`,
+`code-style-shell.md`, `code-style-rust.md`, `code-style-markdown.md`,
+`debugging.md`, `quality.md`). These are the authoritative reference for coding
+conventions — code is evaluated against them during the Quality review pass.
+
 ## Skills
 
 Skills codify procedures that personas reference. They answer "how to do X" so
@@ -129,7 +152,8 @@ personas can focus on "what to do."
 - **agent-memory** — long-term and session memory across sessions
 - **architect-self-review** — DRAFT self-review rubric — plan quality gate
 - **boot** — session startup sequence (full boot for complex features)
-- **code-coherence-review** — logic coherence, correctness, and structural integrity checks
+- **code-coherence-review** — logic coherence, correctness, and structural
+  integrity checks
 - **code-quality-review** — rules-walk procedure for coding standards compliance
 - **code-sec-review** — OWASP-aligned security code review checklist
 - **coder-self-review** — GRASP self-review rubric — implementation quality
@@ -159,11 +183,16 @@ personas can focus on "what to do."
 - Add rules to `rules/`
 - Add skills to `skills/` following the schema in `skills/README.md`
 - Modify existing files to match your project's needs
-- **AGENTS.md** — edit to add your project's coding conventions, language-specific rules, or personal preferences. This file loads automatically in quick mode, so anything you add here shapes every session without booting the Maestro.
+- **AGENTS.md** — edit to add your project's coding conventions,
+  language-specific rules, or personal preferences. This file loads
+  automatically in quick mode, so anything you add here shapes every session
+  without booting the Maestro.
 
 Each directory has a README with the full schema definition.
 
-- **Google Style Guides** — edit `rules/code/code-style-*.md` to tune conventions per language. The review pipeline loads these automatically based on file extension (see `docs/roadmap.md` for the full roadmap).
+- **Google Style Guides** — edit `rules/code/code-style-*.md` to tune
+  conventions per language. The review pipeline loads these automatically
+  based on file extension (see `docs/roadmap.md` for the full roadmap).
 
 ## FAQ
 
@@ -189,11 +218,23 @@ build steps.*
 
 ### Full orchestration or quick mode — which do I use?
 
-**Full orchestration** boots the Maestro — an orchestrator that decomposes your request, plans with the Architect, dispatches to the Coder, validates with the Reviewer, and maps the codebase with the Contextualizer. It carries memory across sessions, tracks work in to-do files, and manages a review pipeline. Use it for complex multi-step work where you want structured planning, adversarial review, or cross-session memory.
+**Full orchestration** boots the Maestro — an orchestrator that decomposes your
+request, plans with the Architect, dispatches to the Coder, validates with the
+Reviewer, and maps the codebase with the Contextualizer. It carries memory
+across sessions, tracks work in to-do files, and manages a review pipeline. Use
+it for complex multi-step work where you want structured planning, adversarial
+review, or cross-session memory.
 
-**Quick mode** is the default. Just type your request and the CLI works on it directly — your `AGENTS.md` style book is auto-loaded so the agent follows your coding conventions without any boot ceremony. Use it for everyday work: bug fixes, features, refactors, anything where you know what you want and just need it done.
+**Quick mode** is the default. Just type your request and the CLI works on it
+directly — your `AGENTS.md` style book is auto-loaded so the agent follows your
+coding conventions without any boot ceremony. Use it for everyday work: bug
+fixes, features, refactors, anything where you know what you want and just need
+it done.
 
-The trade-off is speed vs. structure. Quick mode is faster and cheaper — one agent, no overhead. Full orchestration is more thorough — multiple specialized agents, review gates, and resumable state — but costs more tokens and requires a boot phrase each session.
+The trade-off is speed vs. structure. Quick mode is faster and cheaper — one
+agent, no overhead. Full orchestration is more thorough — multiple specialized
+agents, review gates, and resumable state — but costs more tokens and requires a
+boot phrase each session.
 
 ### Why multi-model?
 
