@@ -17,8 +17,9 @@ class TestCheckMarkdown(unittest.TestCase):
 
     def run_script(self, *args):
         """Helper to run the check_markdown.py script with arguments."""
+        import sys
         result = subprocess.run(
-            ["python3", self.script_path] + list(args),
+            [sys.executable, self.script_path] + list(args),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
