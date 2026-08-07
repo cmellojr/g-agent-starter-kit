@@ -18,7 +18,10 @@ trail.
 
 ## Procedure
 
-1. **Check for the memory directory.** Look for `.memory/` at the project root. If it does not exist, create it with `long-term.md` (initialized with the section headers from the long-term schema below) and subdirectories: `session/`, `plan/`, `todo/`, `reviews/` (all empty).
+1. **Check for the memory directory.** Look for `.memory/` at the project
+   root. If it does not exist, create it with `long-term.md` (initialized with
+   the section headers from the long-term schema below) and subdirectories:
+   `session/`, `plan/`, `todo/`, `reviews/` (all empty).
 
 2. **Read session memory at session start.** List all files in
      `.memory/session/`. For each file with status `paused` or `in-progress`,

@@ -6,14 +6,17 @@ multiple pages to explain is likely a skill in disguise.
 ## Rule Hierarchy
 
 - **Commandments** (`rules/commandments/`) — sacred, absolute, never bypassed.
-- **Code rules** (`rules/code/`) — authoritative within their scope, shall not be bent.
+- **Code rules** (`rules/code/`) — authoritative within their scope, shall not
+  be bent.
 - **Project guidance** — supporting direction for repository-specific behavior.
 
 ## Available Rules
 
 - **`commandments/git`** — Git commit and branch policy for this repository.
-- **`code/quality`** — Universal naming, testing, and quality conventions (coding)
-- **`code/debugging`** — Root cause before fix, three-strike rule, anti-rationalization (coding)
+- **`code/quality`** — Universal naming, testing, and quality conventions
+  (coding)
+- **`code/debugging`** — Root cause before fix, three-strike rule,
+  anti-rationalization (coding)
 - **`git`** — Conventional commits, branch naming, commit style (coding)
 
 ## File Naming

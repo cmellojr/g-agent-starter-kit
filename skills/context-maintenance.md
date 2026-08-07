@@ -138,6 +138,6 @@ Brief description of what this feature does from the user's perspective.
 
 When populating the `## Constraints` or `## Guidance` sections of a
 `.context.md`, consider referencing the applicable Google Style Guide
-(`rules/edicts/code-style-*.md`) for language-specific rules. This ensures
+(`rules/code/code-style-*.md`) for language-specific rules. This ensures
 the context file aligns with the project-wide style conventions and avoids
 duplicating style guidance already codified in the edict files.
