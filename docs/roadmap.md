@@ -36,7 +36,7 @@ software engineering standards.
 
 ### Phase 2 — Universal Code Quality
 
-- Updated `rules/code/code-quality.md` to focus on cross-language principles
+- Updated `rules/code/quality.md` to focus on cross-language principles
   (KISS, DRY, SRP).
 - Added mandatory docstring requirements and data trust boundary rules.
 
@@ -111,7 +111,7 @@ software engineering standards.
 
 *   **Goal**: Integrate production stability into code quality.
 *   **Actions**:
-    *   Update `rules/code/code-quality.md` with resilient error handling
+    *   Update `rules/code/quality.md` with resilient error handling
       (backoff/jitter) and structured logging.
 *   **Reference**: [Google SRE Books](https://sre.google/books/).
 

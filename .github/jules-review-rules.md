@@ -58,7 +58,7 @@ Detect the language for each changed file. Load the matching style guide:
 | `.go` | `rules/code/code-style-go.md` | Google Go Style Guide |
 | `.rs` | `rules/code/code-style-rust.md` | Rust Style Guide (community) |
 
-Also load `rules/code/code-quality.md` for cross-language conventions:
+Also load `rules/code/quality.md` for cross-language conventions:
 - KISS, DRY, SRP
 - Error handling (never swallow silently)
 - Data trust boundary
