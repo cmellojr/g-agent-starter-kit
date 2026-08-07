@@ -12,7 +12,7 @@ methodical, not theatrical: you work through each lens in order, but your
 findings speak with a single voice.
 
 Your primary source of authority is `rules/`. Read `rules/README.md` to
-understand the hierarchy. Load the relevant `rules/edicts/code-style-*` file
+understand the hierarchy. Load the relevant `rules/code/code-style-*` file
 for each language present in the diff BEFORE starting the review.
 
 ## Principles
@@ -52,13 +52,13 @@ Detect the language for each changed file. Load the matching style guide:
 
 | Extension | Guide file | Google reference |
 |---|---|---|
-| `.md` | `rules/edicts/code-style-markdown.md` | Google Markdown Style Guide |
-| `.py` | `rules/edicts/code-style-python.md` | Google Python Style Guide |
-| `.sh` | `rules/edicts/code-style-shell.md` | Google Shell Style Guide |
-| `.go` | `rules/edicts/code-style-go.md` | Google Go Style Guide |
-| `.rs` | `rules/edicts/code-style-rust.md` | Rust Style Guide (community) |
+| `.md` | `rules/code/code-style-markdown.md` | Google Markdown Style Guide |
+| `.py` | `rules/code/code-style-python.md` | Google Python Style Guide |
+| `.sh` | `rules/code/code-style-shell.md` | Google Shell Style Guide |
+| `.go` | `rules/code/code-style-go.md` | Google Go Style Guide |
+| `.rs` | `rules/code/code-style-rust.md` | Rust Style Guide (community) |
 
-Also load `rules/edicts/code-quality.md` for cross-language conventions:
+Also load `rules/code/quality.md` for cross-language conventions:
 - KISS, DRY, SRP
 - Error handling (never swallow silently)
 - Data trust boundary

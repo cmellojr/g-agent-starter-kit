@@ -6,7 +6,14 @@ reverse-engineering.
 
 ## Honesty and Ambiguity
 
-If a request is flawed, say so — agreeable silence produces bad code. When the user assigns a task, proceed on any non-destructive reversible action needed to complete it; git is the safety net, stopping to confirm the obvious wastes the session. Stop only for destructive or irreversible actions (delete repository, drop database, force-push to main), or genuinely non-obvious trade-offs. When intent could mean different things, escalate with structure: one problem, three options with trade-offs, one recommendation with reason. When the ambiguity only changes how (not what), proceed inline with a documented default.
+If a request is flawed, say so — agreeable silence produces bad code. When the
+user assigns a task, proceed on any non-destructive reversible action needed to
+complete it; git is the safety net, stopping to confirm the obvious wastes the
+session. Stop only for destructive or irreversible actions (delete repository,
+drop database, force-push to main), or genuinely non-obvious trade-offs. When
+intent could mean different things, escalate with structure: one problem, three
+options with trade-offs, one recommendation with reason. When the ambiguity only
+changes how (not what), proceed inline with a documented default.
 
 ## Code Shape
 
@@ -46,7 +53,16 @@ is not the signal.
 ### Readability Over Performance
 
 <audience-directive>
-You are not writing code for the compiler. The compiler validates syntax and will tell you when you got it wrong — that is its only job, and it is already solved. You are writing code for a stranger at 3am who has never seen this codebase, does not have your context, and must fix a bug in it without breaking anything else. That stranger is your audience. Every choice you make — a name, a comment, a data structure, an inlined expression — answers to one question: will the stranger understand this without reverse-engineering it, without reading documentation, without doing arithmetic in their head? If the answer is no, the code is wrong, regardless of whether it compiles. Compiling is the floor, not the goal. Readable-by-a-stranger-at-3am is the goal.
+You are not writing code for the compiler. The compiler validates syntax and
+will tell you when you got it wrong — that is its only job, and it is already
+solved. You are writing code for a stranger at 3am who has never seen this
+codebase, does not have your context, and must fix a bug in it without breaking
+anything else. That stranger is your audience. Every choice you make — a name, a
+comment, a data structure, an inlined expression — answers to one question: will
+the stranger understand this without reverse-engineering it, without reading
+documentation, without doing arithmetic in their head? If the answer is no, the
+code is wrong, regardless of whether it compiles. Compiling is the floor, not
+the goal. Readable-by-a-stranger-at-3am is the goal.
 </audience-directive>
 
 When choosing between a clever solution and a simple one, prefer simple. Clever
@@ -135,7 +151,14 @@ what changed.
   constructor are one concept.
 - Lines kept short enough to read without horizontal scrolling.
 
-Locality of behavior: if a function takes a struct as its first argument and reads or transforms its fields, it belongs as a method on that struct, not a package-level function. A function whose only caller is a method belongs with that caller — nested within it when the body is a trivial wrapping, or as a method on the same type when it carries real transformation logic — not at package level serving one consumer. Exceptions: constructors (`NewFoo`), functions that create a struct from external input, and genuinely generic utilities that work across multiple unrelated types.
+Locality of behavior: if a function takes a struct as its first argument and
+reads or transforms its fields, it belongs as a method on that struct, not a
+package-level function. A function whose only caller is a method belongs with
+that caller — nested within it when the body is a trivial wrapping, or as a
+method on the same type when it carries real transformation logic — not at
+package level serving one consumer. Exceptions: constructors (`NewFoo`),
+functions that create a struct from external input, and genuinely generic
+utilities that work across multiple unrelated types.
 
 ### Style Proximity
 
@@ -249,7 +272,13 @@ codebase; all findings belong in the review handoff.
 
 ### Review Trust
 
-A passing automated check is evidence, not proof. Linters, test suites, and ref checkers have blind spots — stale patterns, generated files, paths the tool doesn't cover. Manually verify the same category the tool checked wherever the tool's blind spot would have consequences — renames, path moves, permission and auth changes, data migrations are the usual suspects, but the test is consequence, not category. A reviewer reads and reports — it creates no files in the codebase; all findings belong in the review handoff.
+A passing automated check is evidence, not proof. Linters, test suites, and ref
+checkers have blind spots — stale patterns, generated files, paths the tool
+doesn't cover. Manually verify the same category the tool checked wherever the
+tool's blind spot would have consequences — renames, path moves, permission and
+auth changes, data migrations are the usual suspects, but the test is
+consequence, not category. A reviewer reads and reports — it creates no files in
+the codebase; all findings belong in the review handoff.
 
 ## Native Tooling
 

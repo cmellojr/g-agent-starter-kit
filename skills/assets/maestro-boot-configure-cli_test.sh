@@ -8,6 +8,8 @@
 # @updated      2026-06-24
 set -euo pipefail
 
+export isRunningInsideSupportedCliEnvOverride=true
+
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 configureScript="$scriptDir/maestro-boot-configure-cli.sh"
 

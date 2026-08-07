@@ -8,9 +8,10 @@ resolving all 10 merge conflicts while preserving fork-specific additions.
 ## Current State (Before)
 
 The cmellojr fork contains additions not present in upstream:
-- `.context.md` in multiple directories (root, docs/, personas/, rules/, skills/)
+- `.context.md` in multiple directories (root, docs/, personas/, rules/,
+  skills/)
 - `docs/features.md`, `docs/roadmap.md`
-- New rules: `rules/edicts/api-design.md`, `code-style-go.md`,
+- New rules: `rules/code/api-design.md`, `code-style-go.md`,
   `code-style-markdown.md`, `code-style-python.md`, `code-style-rust.md`,
   `code-style-shell.md`
 - Scripts: `skills/assets/check_markdown.py`, `wrap_markdown.py`
@@ -42,8 +43,10 @@ rebranding).
 
 ## Affected Areas
 
-- **Personas** (`personas/`) — architect, coder, contextualizer, maestro, reviewer
-- **Skills** (`skills/`) — agent-memory, dispatch, review-loop, reviewer-self-review
+- **Personas** (`personas/`) — architect, coder, contextualizer, maestro,
+  reviewer
+- **Skills** (`skills/`) — agent-memory, dispatch, review-loop,
+  reviewer-self-review
 - **Assets** (`skills/assets/`) — maestro-boot-configure-cli.sh,
   maestro-boot-configure-cli_test.sh
 - **Changelog** (`CHANGELOG.md`)

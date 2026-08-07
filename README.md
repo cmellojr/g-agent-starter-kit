@@ -24,7 +24,7 @@ memory, rules, and 33 context files created automatically._
 This is a **foundation**, not a finished product. It ships general-purpose
 personas, common workflow skills, and opinionated rules aligned with [Google
 Style Guides][styleguide] and [Google Engineering Practices][eng-practices].
-Language-specific style rules live in `rules/edicts/code-style-*.md`. Anything
+Language-specific style rules live in `rules/code/code-style-*.md`. Anything
 domain-specific or highly opinionated beyond this belongs in your own fork.
 Clone it, extend it, make it yours — or build one for your entire company.
 
@@ -331,7 +331,7 @@ budgets based on humor profiles — no manual configuration needed.
 
 This edition ships Google-aligned style guides for **Python**, **Go**,
 **Shell**, **Rust**, and **Markdown**. Each guide is a standalone
-`rules/edicts/code-style-*.md` file — edit them freely to match your team's
+`rules/code/code-style-*.md` file — edit them freely to match your team's
 preferences. The review pipeline detects the language of changed files and
 loads the corresponding guide automatically. See `docs/roadmap.md` for the
 full alignment plan and roadmap.

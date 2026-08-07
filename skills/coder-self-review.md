@@ -106,9 +106,22 @@ _Does this code respect the project's architectural boundaries?_
 _Did this code look like it belongs in this codebase and follow the Google Style
 Guide for the language?_
 
-- **0** — Code does not match the local style of surrounding files (different naming conventions, structure, or patterns). Violates the Google Style Guide for the language. Commandment-level rule violations present. Cryptic one-liners or clever patterns that need comments to understand. Unjustified lint/type suppression markers added.
-- **1** — Style mostly matches, but one or two naming or formatting inconsistencies exist against the surrounding code or the Google Style Guide. Counsel-level deviations present without visible justification. One lint suppression added without an adjacent comment explaining why.
-- **2** — Read two neighboring files before writing and matched their style exactly. **Follows Google Style Guide conventions for the language** (naming, imports, formatting, docstrings). All naming follows project conventions. Code is readable without comments — the structure explains itself. No new lint suppressions, or each has a clear adjacent justification. All relevant rules checked and followed. Commandments respected, code rules justified, and any broader guidance noted.
+- **0** — Code does not match the local style of surrounding files (different
+  naming conventions, structure, or patterns). Violates the Google Style Guide
+  for the language. Commandment-level rule violations present. Cryptic
+  one-liners or clever patterns that need comments to understand. Unjustified
+  lint/type suppression markers added.
+- **1** — Style mostly matches, but one or two naming or formatting
+  inconsistencies exist against the surrounding code or the Google Style Guide.
+  Counsel-level deviations present without visible justification. One lint
+  suppression added without an adjacent comment explaining why.
+- **2** — Read two neighboring files before writing and matched their style
+  exactly. **Follows Google Style Guide conventions for the language** (naming,
+  imports, formatting, docstrings). All naming follows project conventions. Code
+  is readable without comments — the structure explains itself. No new lint
+  suppressions, or each has a clear adjacent justification. All relevant rules
+  checked and followed. Commandments respected, code rules justified, and any
+  broader guidance noted.
 
 ### P — PROTECTION
 

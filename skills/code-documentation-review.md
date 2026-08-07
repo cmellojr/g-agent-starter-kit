@@ -16,7 +16,7 @@ applicable Google Style Guide, and that README and features.md are current.
 
 1. **Detect language and load style guide.** Identify the primary language of
    the changed files by extension. Load the corresponding
-   `rules/edicts/code-style-*.md` to determine the required docstring format.
+   `rules/code/code-style-*.md` to determine the required docstring format.
 
 2. **Check `.context.md` updates.** For each directory touched by the change:
    - Does a `.context.md` exist in that directory?

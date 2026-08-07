@@ -82,9 +82,17 @@ The Maestro must consult this registry during the Route step before dispatching.
    sed '/^---$/,/^---$/d' personas/<name>.md
    ```
 
-6. **List the rules (scoped).** Consult `rules/README.md` and select the applicable rules for the task category. List their file paths in `<rules>` tags — do not inline the file contents. The persona has file access and will read them directly. If no rules match, omit the block entirely. When the task involves code changes — even if the persona does not write code (e.g. architect planning implementations) — include the relevant coding rules so the persona's output aligns with the conventions the coder will follow.
+6. **List the rules (scoped).** Consult `rules/README.md` and select the
+   applicable rules for the task category. List their file paths in `<rules>`
+   tags — do not inline the file contents. The persona has file access and will
+   read them directly. If no rules match, omit the block entirely. When the task
+   involves code changes — even if the persona does not write code (e.g.
+   architect planning implementations) — include the relevant coding rules so
+   the persona's output aligns with the conventions the coder will follow.
 
-   **Language detection for style guides:** When the task touches files in a specific language, detect the language by extension and include the corresponding language-specific style guide:
+   **Language detection for style guides:** When the task touches files in a
+   specific language, detect the language by extension and include the
+   corresponding language-specific style guide:
    - `.py` files → include `rules/code/code-style-python.md`
    - `.go` files → include `rules/code/code-style-go.md`
    - `.sh` files → include `rules/code/code-style-shell.md`

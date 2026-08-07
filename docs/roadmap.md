@@ -30,13 +30,13 @@ software engineering standards.
 
 ### Phase 1 — Language-Specific Style Rules
 
-- Created individual style guides in `rules/edicts/` for Python, Go, Shell,
+- Created individual style guides in `rules/code/` for Python, Go, Shell,
   Rust, and Markdown.
 - Aligned with official Google Style Guides (or Rust community standards).
 
 ### Phase 2 — Universal Code Quality
 
-- Updated `rules/edicts/code-quality.md` to focus on cross-language principles
+- Updated `rules/code/quality.md` to focus on cross-language principles
   (KISS, DRY, SRP).
 - Added mandatory docstring requirements and data trust boundary rules.
 
@@ -93,7 +93,7 @@ software engineering standards.
 
 *   **Goal**: Standardize REST APIs and data structures.
 *   **Actions**:
-    *   Create `rules/edicts/api-design.md` for resource naming and standard
+    *   Create `rules/code/api-design.md` for resource naming and standard
       methods.
     *   Update `personas/architect.md` to consult the API design edict.
 *   **Reference**: [Google API Design Guide](https://cloud.google.com/apis/design).
@@ -102,7 +102,7 @@ software engineering standards.
 
 *   **Goal**: Ensure deterministic and maintainable test suites.
 *   **Actions**:
-    *   Create `rules/edicts/testing-practices.md` covering hermetic tests and
+    *   Create `rules/code/testing-practices.md` covering hermetic tests and
       behavior verification.
     *   Align with "Testing on the Toilet" best practices.
 *   **Reference**: [Google Testing on the Toilet](https://testing.googleblog.com/).
@@ -111,7 +111,7 @@ software engineering standards.
 
 *   **Goal**: Integrate production stability into code quality.
 *   **Actions**:
-    *   Update `rules/edicts/code-quality.md` with resilient error handling
+    *   Update `rules/code/quality.md` with resilient error handling
       (backoff/jitter) and structured logging.
 *   **Reference**: [Google SRE Books](https://sre.google/books/).
 
@@ -119,8 +119,8 @@ software engineering standards.
 
 *   **Goal**: Official guides for TypeScript, HTML, and CSS.
 *   **Actions**:
-    *   Create `rules/edicts/code-style-typescript.md`.
-    *   Create `rules/edicts/code-style-html-css.md`.
+    *   Create `rules/code/code-style-typescript.md`.
+    *   Create `rules/code/code-style-html-css.md`.
 *   **Reference**: [Google Style Guides](https://google.github.io/styleguide/).
 
 ## See also

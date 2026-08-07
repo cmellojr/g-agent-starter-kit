@@ -17,7 +17,7 @@ maintainable over time.
 
 1. **Load the applicable Google Style Guide.** Detect the language of the
    changed files (by extension) and load the corresponding
-   `rules/edicts/code-style-*.md` to understand the language's design
+   `rules/code/code-style-*.md` to understand the language's design
    philosophy.
 
 2. **Evaluate design appropriateness.**

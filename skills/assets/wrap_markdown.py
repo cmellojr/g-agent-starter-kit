@@ -13,10 +13,12 @@ import sys
 
 def get_continuation_indent(text: str, base_indent: str) -> str:
     stripped = text.lstrip()
-    if stripped.startswith("- ") or stripped.startswith("* ") or stripped.startswith("+ "):
-        return base_indent + "  "
-    if re.match(r"^\d+\.\s", stripped):
-        return base_indent + "     "
+    match = re.match(r"^([\-\*\+]\s+)", stripped)
+    if match:
+        return base_indent + " " * len(match.group(1))
+    match = re.match(r"^(\d+\.\s+)", stripped)
+    if match:
+        return base_indent + " " * len(match.group(1))
     return base_indent
 
 
@@ -27,7 +29,9 @@ def wrap_line(raw: str, width: int) -> list[str] | None:
 
     indent = raw[:len(raw) - len(raw.lstrip())]
     content = raw.lstrip()
-    avail = width - len(indent)
+
+    cont_indent = get_continuation_indent(content, indent)
+    avail = width - max(len(indent), len(cont_indent))
     if avail < 20:
         return [raw]
 
@@ -42,7 +46,6 @@ def wrap_line(raw: str, width: int) -> list[str] | None:
         return [raw]
 
     result = []
-    cont_indent = get_continuation_indent(content, indent)
     for i, wl in enumerate(wrapped):
         if i == 0:
             result.append(indent + wl + "\n")

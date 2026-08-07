@@ -12,11 +12,11 @@ naming conventions, formatting, imports, docstring format, and testing patterns:
 
 | Language | Guide |
 |---|---|
-| Python | `rules/edicts/code-style-python.md` |
-| Go | `rules/edicts/code-style-go.md` |
-| Shell | `rules/edicts/code-style-shell.md` |
-| Rust | `rules/edicts/code-style-rust.md` |
-| Markdown | `rules/edicts/code-style-markdown.md` |
+| Python | `rules/code/code-style-python.md` |
+| Go | `rules/code/code-style-go.md` |
+| Shell | `rules/code/code-style-shell.md` |
+| Rust | `rules/code/code-style-rust.md` |
+| Markdown | `rules/code/code-style-markdown.md` |
 
 This document covers **cross-language principles** only.
 
@@ -46,25 +46,45 @@ function, variable, or constant. Duplication is a bug waiting to happen.
 
 ### Single Responsibility Principle
 
-Functions, modules, and files SHOULD have one reason to change. A function that performs setup AND reporting, or parsing AND validation, has two responsibilities and SHOULD be split. When in doubt, ask: "if the requirements change, would these two operations change independently?" If yes, split. If no, keep together.
+Functions, modules, and files SHOULD have one reason to change. A function that
+performs setup AND reporting, or parsing AND validation, has two
+responsibilities and SHOULD be split. When in doubt, ask: "if the requirements
+change, would these two operations change independently?" If yes, split. If no,
+keep together.
 
 ### Method Granularity
 
-A function that delegates to a single call with trivial transformation is indirection without value. Functions SHOULD do meaningful work — if the body is a short sequence (roughly 5 lines or fewer) that could be inlined at the call site without loss of clarity, the function should not exist. Extract when the logic is reused, complex, or conceptually distinct. Do not extract to satisfy a reflexive "small functions are good" instinct.
+A function that delegates to a single call with trivial transformation is
+indirection without value. Functions SHOULD do meaningful work — if the body is
+a short sequence (roughly 5 lines or fewer) that could be inlined at the call
+site without loss of clarity, the function should not exist. Extract when the
+logic is reused, complex, or conceptually distinct. Do not extract to satisfy a
+reflexive "small functions are good" instinct.
 
 ### Variable Naming
 
-Variable names MUST convey intention or purpose, not describe content. Single-letter variable names MUST NOT be used.
+Variable names MUST convey intention or purpose, not describe content.
+Single-letter variable names MUST NOT be used.
 
 ### Function Naming
 
-Function names SHOULD NOT embed infrastructure or tool names (e.g., `resolveOpencodeConfigPath`). Use generic terms that describe the role (`resolveSupportedCliConfigPath`). The function should survive a tool swap without needing a rename.
+Function names SHOULD NOT embed infrastructure or tool names (e.g.,
+`resolveOpencodeConfigPath`). Use generic terms that describe the role
+(`resolveSupportedCliConfigPath`). The function should survive a tool swap
+without needing a rename.
 
 ### Method Ordering
 
-Functions SHOULD be ordered top-down: if function A calls function B, then function B SHOULD be defined above function A. The reader should be able to read the file from top to bottom, understanding each function before encountering its callers. Helpers and low-level utilities come first; orchestrators and high-level entry points come last.
+Functions SHOULD be ordered top-down: if function A calls function B, then
+function B SHOULD be defined above function A. The reader should be able to read
+the file from top to bottom, understanding each function before encountering its
+callers. Helpers and low-level utilities come first; orchestrators and
+high-level entry points come last.
 
-Exception: constructors and factory functions (e.g., `NewFoo`, `CreateBar`) SHOULD be placed immediately after the struct/class/type declaration they construct, not at the bottom of the file. The type and its constructor form a single conceptual unit.
+Exception: constructors and factory functions (e.g., `NewFoo`, `CreateBar`)
+SHOULD be placed immediately after the struct/class/type declaration they
+construct, not at the bottom of the file. The type and its constructor form a
+single conceptual unit.
 
 ### Error Handling
 
@@ -124,11 +144,15 @@ commit summary.
 
 ### Native Tooling
 
-Coders SHOULD use native file operation tools (Edit, Read, Write, Grep, Glob) directly. Writing scripts (Python, Bash, etc.) to perform file reads, edits, searches, or any file system operation creates unnecessary friction — scripts require user authorization and review. The native tools are purpose-built for these operations and execute without approval overhead.
+Coders SHOULD use native file operation tools (Edit, Read, Write, Grep, Glob)
+directly. Writing scripts (Python, Bash, etc.) to perform file reads, edits,
+searches, or any file system operation creates unnecessary friction — scripts
+require user authorization and review. The native tools are purpose-built for
+these operations and execute without approval overhead.
 
 ## Rationale
 
 These cross-language conventions produce code that reads linearly, names that
 communicate intent, and tests that explain failures. Language-specific rules
-in `rules/edicts/code-style-*.md` provide the detailed formatting and naming
+in `rules/code/code-style-*.md` provide the detailed formatting and naming
 conventions for each language.
