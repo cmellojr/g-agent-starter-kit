@@ -1,7 +1,7 @@
 name: Jules PR Review
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
     inputs:
@@ -15,6 +15,11 @@ concurrency:
 
 jobs:
   review:
+    if: |
+      github.event_name == 'workflow_dispatch' || (
+        !contains(github.event.pull_request.head.ref, 'jules-') &&
+        !contains(github.actor, 'jules')
+      )
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -239,9 +244,14 @@ jobs:
                   VERDICT=$(echo "$REVIEW" | grep -oP 'VERDICT:\s*\K(approve|comment|block)' | tail -1)
                   echo "verdict=${VERDICT:-comment}" >> $GITHUB_OUTPUT
                   break
+                else
+                  echo "Warning: Session is COMPLETED but no agentMessaged could be extracted from activities."
+                  echo "Activities Response:"
+                  echo "$ACTIVITIES_RESP"
+                  echo "review=Jules session completed but review output was missing." >> $GITHUB_OUTPUT
+                  echo "verdict=error" >> $GITHUB_OUTPUT
+                  break
                 fi
-                echo "No agentMessaged found in activities, waiting…"
-                POLL_INTERVAL=20
                 ;;
               FAILED)
                 REASON_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
