@@ -1,8 +1,23 @@
 # AGENTS.md
 
-A style book for code that reads itself. Internalize the reasoning, apply the
-judgment, write code that the next reader can follow without
-reverse-engineering.
+
+## Operational Checklist
+
+- Ensure changes pass CI (see docs/CONTRIBUTING.md and docs/ci-presubmit.md if present).
+- Follow language style rules in rules/code/code-style-*.md for affected files.
+- Update or add .context.md when structure changes (see skills/context-maintenance.md).
+- Run the appropriate Reviewer passes (.github/jules-review-rules.md) and address blockers.
+- Add docs or update docs/features.md and CHANGELOG.md for user-facing changes.
+
+## References & Where to Find More
+
+- docs/CONTRIBUTING.md — contribution and PR guidance
+- rules/git.md — commit message and branch guidance
+- .github/jules-review-rules.md — PR review pipeline and pass expectations
+- skills/dispatch.md and skills/boot.md — Maestro dispatch and boot procedures
+- rules/code/code-style-*.md — language-specific style guides (python, go, shell, rust, markdown)
+- skills/code-sec-review.md — security review checklist
+
 
 ## Honesty and Ambiguity
 
