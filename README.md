@@ -17,10 +17,6 @@ It's model-agnostic: orchestrate on Claude, plan on Gemini or Kimi, review on
 Qwen or DeepSeek — or any combination you choose. Code is reviewed against
 [Google Engineering Practices][eng-practices] at every stage.
 
-![Boot sequence demo](docs/demo.jpg)
-_Maestro booted on a Clean Architecture Go project — gitignore, auto-update,
-memory, rules, and 33 context files created automatically._
-
 This is a **foundation**, not a finished product. It ships general-purpose
 personas, common workflow skills, and opinionated rules aligned with [Google
 Style Guides][styleguide] and [Google Engineering Practices][eng-practices].
