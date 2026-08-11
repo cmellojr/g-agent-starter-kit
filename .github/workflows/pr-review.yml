@@ -47,19 +47,23 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set pending status
+        env:
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api "repos/${{ github.repository }}/statuses/${{ steps.pr.outputs.head_sha }}" \
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA" \
             -f state=pending -f context=jules/review \
             -f description='Jules is reviewing this PR…'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Post in-progress comment
         id: comment
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
           # Use gh api to create the comment which returns JSON; capture full output for diagnostics
-          RESPONSE=$(gh api -X POST "repos/${{ github.repository }}/issues/${{ steps.pr.outputs.number }}/comments" \
+          RESPONSE=$(gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
             -f body="🤖 **Jules is reviewing this PR.** Results will appear here shortly (typically 1-5 minutes)." 2>&1)
           RC=$?
           set -e
@@ -80,12 +84,13 @@ jobs:
               echo "id=$COMMENT_ID" >> $GITHUB_OUTPUT
             fi
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get PR diff
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr diff "${{ steps.pr.outputs.number }}" > pr.diff
+          gh pr diff "$PR_NUMBER" > pr.diff
           DIFF_SIZE=$(wc -c < pr.diff)
           echo "Diff size: $DIFF_SIZE bytes"
           if [ "$DIFF_SIZE" -gt 80000 ]; then
@@ -94,10 +99,11 @@ jobs:
             mv pr.diff.truncated pr.diff
             echo "Diff was truncated to 80000 bytes — review may be incomplete." > truncated_note.txt
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build prompt
+        env:
+          PR_NUM: ${{ steps.pr.outputs.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
           RULES=""
@@ -106,14 +112,14 @@ jobs:
           fi
           DIFF=$(cat pr.diff)
           TRUNCATED_NOTE=$(cat truncated_note.txt 2>/dev/null || echo "")
-          PR_TITLE="$(gh pr view "${{ steps.pr.outputs.number }}" --json title --jq '.title' 2>/dev/null || echo '')"
-          PR_BODY="$(gh pr view "${{ steps.pr.outputs.number }}" --json body --jq '.body' 2>/dev/null || echo '')"
+          PR_TITLE="$(gh pr view "$PR_NUM" --json title --jq '.title' 2>/dev/null || echo '')"
+          PR_BODY="$(gh pr view "$PR_NUM" --json body --jq '.body' 2>/dev/null || echo '')"
 
           cat > prompt.txt <<EOF
           You are an expert code reviewer. Review the pull request below.
 
           # Repository
-          ${{ github.repository }}
+          $GITHUB_REPOSITORY
 
           # UNTRUSTED: PR title
           $PR_TITLE
@@ -121,7 +127,7 @@ jobs:
           # UNTRUSTED: PR description
           ${PR_BODY:-(no description)}
 
-          # PR ## ${{ steps.pr.outputs.number }}
+          # PR ## $PR_NUM
 
           EOF
 
@@ -163,7 +169,7 @@ jobs:
 
           jq -n \
             --arg prompt "$(cat prompt.txt)" \
-            --arg source "sources/github/${{ github.repository }}" \
+            --arg source "sources/github/$GITHUB_REPOSITORY" \
             '{
               prompt: $prompt,
               title: ("Review PR #" + env.PR_NUM),
@@ -172,17 +178,16 @@ jobs:
                 githubRepoContext: { startingBranch: "main" }
               }
             }' > jules_payload.json
-        env:
-          PR_NUM: ${{ steps.pr.outputs.number }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Invoke Jules API
         id: jules
+        env:
+          JULES_API_KEY: ${{ secrets.JULES_API_KEY }}
         run: |
           set +e
           RESPONSE=$(curl -s -X POST "https://jules.googleapis.com/v1alpha/sessions" \
             -H "Content-Type: application/json" \
-            -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+            -H "x-goog-api-key: $JULES_API_KEY" \
             -d @jules_payload.json 2>&1)
           RC=$?
           set -e
@@ -211,8 +216,11 @@ jobs:
 
       - name: Poll for review completion
         id: poll
+        env:
+          SESSION_ID: ${{ steps.jules.outputs.id }}
+          JULES_API_KEY: ${{ secrets.JULES_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          SESSION_ID="${{ steps.jules.outputs.id }}"
           if [ -z "$SESSION_ID" ]; then
             echo "No session ID available from Jules; skipping poll."
             echo "review=Jules did not return a review within the timeout." >> $GITHUB_OUTPUT
@@ -225,7 +233,7 @@ jobs:
           POLL_INTERVAL=20
           while [ $(date +%s) -lt $DEADLINE ]; do
             # Fetch session state safely
-            STATE_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+            STATE_RESP=$(curl -s -H "x-goog-api-key: $JULES_API_KEY" \
               "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" 2>&1)
             STATE=$(echo "$STATE_RESP" | jq -r '.state' 2>/dev/null || true)
             if [ -z "$STATE" ] || [ "$STATE" = "null" ]; then
@@ -238,7 +246,7 @@ jobs:
             echo "Session state: $STATE"
             case "$STATE" in
               COMPLETED)
-                ACTIVITIES_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+                ACTIVITIES_RESP=$(curl -s -H "x-goog-api-key: $JULES_API_KEY" \
                   "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID/activities?pageSize=50" 2>&1)
                 REVIEW=$(echo "$ACTIVITIES_RESP" | jq -r '[.activities[] | select(.agentMessaged != null) | .agentMessaged.agentMessage] | last' 2>/dev/null || true)
                 if [ -n "$REVIEW" ] && [ "$REVIEW" != "null" ]; then
@@ -259,7 +267,7 @@ jobs:
                 fi
                 ;;
               FAILED)
-                REASON_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+                REASON_RESP=$(curl -s -H "x-goog-api-key: $JULES_API_KEY" \
                   "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" 2>&1)
                 REASON=$(echo "$REASON_RESP" | jq -r '.stateReason // "Unknown"' 2>/dev/null || true)
                 echo "Session failed: $REASON"
@@ -270,7 +278,7 @@ jobs:
               AWAITING_PLAN_APPROVAL|AWAITING_USER_FEEDBACK)
                 echo "Session needs input — approving plan"
                 curl -s -X POST \
-                  -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
+                  -H "x-goog-api-key: $JULES_API_KEY" \
                   -H "Content-Type: application/json" \
                   -d '{}' \
                   "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID:approvePlan" > /dev/null || true
@@ -283,28 +291,30 @@ jobs:
             echo "review=Jules did not return a review within the timeout." >> $GITHUB_OUTPUT
             echo "verdict=timeout" >> $GITHUB_OUTPUT
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update PR comment with review
+        env:
+          REVIEW: ${{ steps.poll.outputs.review }}
+          COMMENT_ID: ${{ steps.comment.outputs.id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REVIEW="${{ steps.poll.outputs.review }}"
           if [ -n "$REVIEW" ]; then
             BODY="## 🤖 Jules Review\n\n${REVIEW}"
-            gh api "repos/${{ github.repository }}/issues/comments/${{ steps.comment.outputs.id }}" \
+            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
               -X PATCH \
               -f body="$BODY" > /dev/null
           else
-            gh api "repos/${{ github.repository }}/issues/comments/${{ steps.comment.outputs.id }}" \
+            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
               -X PATCH \
               -f body="⚠️ **Jules review failed to complete.**" > /dev/null
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set commit status
+        env:
+          VERDICT: ${{ steps.poll.outputs.verdict }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERDICT="${{ steps.poll.outputs.verdict }}"
           case "$VERDICT" in
             approve|comment)
               STATE=success
@@ -319,8 +329,6 @@ jobs:
               DESC="Review failed ($VERDICT)"
               ;;
           esac
-          gh api "repos/${{ github.repository }}/statuses/${{ steps.pr.outputs.head_sha }}" \
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA" \
             -f state=$STATE -f context=jules/review \
             -f description="$DESC"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
