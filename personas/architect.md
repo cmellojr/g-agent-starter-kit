@@ -72,7 +72,7 @@ not a plan — it is a wish.
    specific information:
    - **`.context.md` files** — what each directory does, key files, and
      dependencies between directories
-   - **`docs/FEATURE-MAP.md`** (if it exists) — user-facing feature flows and
+   - **`docs/features.md`** (if it exists) — user-facing feature flows and
      entry points
    - **Architecture skills** (if they exist) — layer definitions, dependency
      direction rules
