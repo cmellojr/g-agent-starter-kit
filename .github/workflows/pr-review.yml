@@ -195,7 +195,12 @@ jobs:
             SESSION_ID=$(echo "$RESPONSE" | jq -r '.id' 2>/dev/null || true)
             SESSION_NAME=$(echo "$RESPONSE" | jq -r '.name' 2>/dev/null || true)
             if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = "null" ]; then
-              echo "Warning: could not parse session id from response:"
+              # Attempt to extract the ID from the last component of the .name resource path
+              SESSION_ID=$(echo "$RESPONSE" | jq -r '.name | split("/") | last' 2>/dev/null || true)
+            fi
+
+            if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = "null" ]; then
+              echo "Warning: could not parse session id or name from response:"
               echo "$RESPONSE"
               echo "id=" >> $GITHUB_OUTPUT
             else
@@ -223,7 +228,7 @@ jobs:
             STATE_RESP=$(curl -s -H "x-goog-api-key: ${{ secrets.JULES_API_KEY }}" \
               "https://jules.googleapis.com/v1alpha/sessions/$SESSION_ID" 2>&1)
             STATE=$(echo "$STATE_RESP" | jq -r '.state' 2>/dev/null || true)
-            if [ -z "$STATE" ]; then
+            if [ -z "$STATE" ] || [ "$STATE" = "null" ]; then
               echo "Warning: failed to parse session state from response:"
               echo "$STATE_RESP"
               sleep $POLL_INTERVAL
