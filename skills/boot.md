@@ -78,7 +78,7 @@ Shell commands always use the `.agents/` prefix for project-root paths.
    (`.py`, `.go`, `.sh`, `.rs`, `.md`, `.ts`, `.tsx`, `.js`, `.java`, `.cpp`)
    to determine which languages are in use. If the project uses a language not
    yet covered by a `code-style-*.md` guide, suggest creating one in a future
-   phase (see `docs/google-style-alignment.md` roadmap).
+   phase (see `docs/roadmap.md` roadmap).
 
 6. **Context.** Verify the project has context files. Run:
 

@@ -23,6 +23,7 @@ software engineering standards.
 | **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Pending** |
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
 | **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
+| **Phase 14** | Code Reviewer's Guide Integration | **Pending** |
 
 ---
 
@@ -122,6 +123,21 @@ software engineering standards.
     *   Create `rules/code/code-style-typescript.md`.
     *   Create `rules/code/code-style-html-css.md`.
 *   **Reference**: [Google Style Guides](https://google.github.io/styleguide/).
+
+### Phase 14 — Code Reviewer's Guide Integration
+
+*   **Goal**: Align AI reviewer behavior, comments, and tone with Google's
+    code reviewer standards.
+*   **Actions**:
+    *   Incorporate the standard of code review (helpfulness, focus on
+        improving code quality over personal preference, distinguishing blocking
+        vs. optional comments) into the reviewer persona playbook and review
+        rules.
+    *   Standardize the review comments structure to focus on the "why" and
+        "how to fix" rather than just highlighting issues.
+    *   Define guidance for the AI reviewer on handling user pushback and
+        managing review cycles constructively.
+*   **Reference**: [Google Code Reviewer's Guide](https://google.github.io/eng-practices/review/reviewer/).
 
 ## See also
 
