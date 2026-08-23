@@ -77,27 +77,20 @@ software engineering standards.
 - Updated `skills/reviewer-architect-adversarial.md` to verify plans against
   language-specific style guides.
 
----
-
-## Future Implementation Plan
-
 ### Phase 9 — CL Author Guidelines
 
-*   **Goal**: Guide the Coder on creating small, easy-to-review changes.
-*   **Actions**:
-    *   Update `personas/coder.md` playbook with "Small CLs" principles.
-    *   Update `skills/coder-self-review.md` to enforce technical reasoning in
-      commit messages.
-*   **Reference**: [Google CL Author's Guide](https://google.github.io/eng-practices/review/developer/).
+- Updated `personas/coder.md` playbook with "Small CLs" principles.
+- Updated `skills/coder-self-review.md` to enforce technical reasoning in
+  commit messages and PR descriptions.
 
 ### Phase 10 — API Design Standards
 
-*   **Goal**: Standardize REST APIs and data structures.
-*   **Actions**:
-    *   Create `rules/code/api-design.md` for resource naming and standard
-      methods.
-    *   Update `personas/architect.md` to consult the API design edict.
-*   **Reference**: [Google API Design Guide](https://cloud.google.com/apis/design).
+- Created `rules/code/api-design.md` for resource naming and standard methods.
+- Updated `personas/architect.md` to consult the API design rules.
+
+---
+
+## Future Implementation Plan
 
 ### Phase 11 — Software Testing Principles
 

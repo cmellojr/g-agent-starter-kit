@@ -12,12 +12,15 @@ multiple pages to explain is likely a skill in disguise.
 
 ## Available Rules
 
-- **`commandments/git`** — Git commit and branch policy for this repository.
-- **`code/quality`** — Universal naming, testing, and quality conventions
-  (coding)
-- **`code/debugging`** — Root cause before fix, three-strike rule,
-  anti-rationalization (coding)
-- **`git`** — Conventional commits, branch naming, commit style (coding)
+- **`git`** (`rules/git.md`) — Git commit message structure and branch policy.
+- **`code/api-design`** (`rules/code/api-design.md`) — Google REST API design
+  standards and resource naming rules.
+- **`code/debugging`** (`rules/code/debugging.md`) — Systematic debugging
+  methodology, three-strike rule, and anti-rationalization rules.
+- **`code/quality`** (`rules/code/quality.md`) — Universal code quality,
+  naming, error handling, and testing principles.
+- **`code/code-style-*`** (`rules/code/code-style-*.md`) — Language-specific
+  style guides (Go, Markdown, Python, Rust, Shell).
 
 ## File Naming
 
