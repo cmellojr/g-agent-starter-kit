@@ -5,13 +5,24 @@ Respects Google Markdown Style Guide exemptions:
 - Frontmatter, code blocks, tables, headings, links, reference definitions.
 """
 
+from __future__ import annotations
+
 import os
 import re
-import textwrap
 import sys
+import textwrap
 
 
 def get_continuation_indent(text: str, base_indent: str) -> str:
+    """Calculates the continuation indent for bulleted or numbered list items.
+
+    Args:
+        text: The stripped line content.
+        base_indent: The base indentation string.
+
+    Returns:
+        The continuation indent string matching the list alignment.
+    """
     stripped = text.lstrip()
     match = re.match(r"^([\-\*\+]\s+)", stripped)
     if match:
@@ -23,6 +34,15 @@ def get_continuation_indent(text: str, base_indent: str) -> str:
 
 
 def wrap_line(raw: str, width: int) -> list[str] | None:
+    """Wraps a single raw text line to the given character width.
+
+    Args:
+        raw: The raw text line to wrap.
+        width: Maximum character width per line.
+
+    Returns:
+        A list of wrapped lines, or None if wrapping was skipped.
+    """
     stripped = raw.rstrip("\n").rstrip("\r")
     if not stripped.strip():
         return [raw]
@@ -55,6 +75,15 @@ def wrap_line(raw: str, width: int) -> list[str] | None:
 
 
 def wrap_file(filepath: str, width: int = 80) -> bool:
+    """Wraps prose lines in a Markdown file to the specified column width.
+
+    Args:
+        filepath: Path to the Markdown file.
+        width: Maximum allowed column width for prose.
+
+    Returns:
+        True if the file was modified, False otherwise.
+    """
     if not os.path.exists(filepath):
         print(f"File not found: {filepath}")
         return False
@@ -138,7 +167,8 @@ def wrap_file(filepath: str, width: int = 80) -> bool:
     return False
 
 
-def main():
+def main() -> None:
+    """Main CLI entrypoint for wrapping Markdown files."""
     if len(sys.argv) < 2:
         print("Usage: wrap_markdown.py <file1.md> [file2.md ...]")
         sys.exit(1)

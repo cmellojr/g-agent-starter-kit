@@ -298,15 +298,19 @@ jobs:
           COMMENT_ID: ${{ steps.comment.outputs.id }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -n "$REVIEW" ]; then
-            BODY="## 🤖 Jules Review\n\n${REVIEW}"
-            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
-              -X PATCH \
-              -f body="$BODY" > /dev/null
+          if [ -n "$COMMENT_ID" ] && [ "$COMMENT_ID" != "null" ]; then
+            if [ -n "$REVIEW" ]; then
+              BODY="## 🤖 Jules Review\n\n${REVIEW}"
+              gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
+                -X PATCH \
+                -f body="$BODY" > /dev/null
+            else
+              gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
+                -X PATCH \
+                -f body="⚠️ **Jules review failed to complete.**" > /dev/null
+            fi
           else
-            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
-              -X PATCH \
-              -f body="⚠️ **Jules review failed to complete.**" > /dev/null
+            echo "Warning: No valid comment ID available to update."
           fi
 
       - name: Set commit status
