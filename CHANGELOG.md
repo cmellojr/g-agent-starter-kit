@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.10.0 - 2026/08/24
+feat(rules): add cross-language testing practices rule from Google TotT principles — create rules/code/testing-practices.md covering hermetic tests, behavior verification, and input-value strategy; update rules/.context.md, rules/code/.context.md, and rules/README.md
+
 0.9.9 - 2026/07/24
 refactor(agents): add audience-directive block to Readability Over Performance — frame the compiler as syntax validator (already solved) and the 3am stranger as the audience; rewrite Comments Are a Signal as confession-not-tool with restructure-first default and demonstrate-the-attempt requirement; widen Locality of Behavior to cover sole-caller helpers (nested when trivial wrapping, method on same type when real transformation logic); reframe Naming preamble to restructure-before-comment
 feat(agents): add Honesty and Ambiguity section — say so when a request is flawed, proceed on reversible actions, stop only for destructive/irreversible, escalate with structure for non-obvious trade-offs

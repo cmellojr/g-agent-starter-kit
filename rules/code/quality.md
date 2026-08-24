@@ -137,6 +137,9 @@ Tests MUST verify behavior (input to output), not implementation details.
 A test that breaks when internals are refactored without changing behavior is
 a maintenance burden, not a safety net.
 
+For cross-language testing principles (hermetic tests, input-value strategy),
+see `testing-practices.md`.
+
 ### Schema Changes
 
 Database schema modifications MUST be explicitly stated in any handoff or

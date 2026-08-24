@@ -21,6 +21,9 @@ multiple pages to explain is likely a skill in disguise.
   naming, error handling, and testing principles.
 - **`code/code-style-*`** (`rules/code/code-style-*.md`) — Language-specific
   style guides (Go, Markdown, Python, Rust, Shell).
+- **`code/testing-practices`** (`rules/code/testing-practices.md`) —
+  Cross-language testing principles (hermetic tests, behavior verification,
+  input-value strategy).
 
 ## File Naming
 

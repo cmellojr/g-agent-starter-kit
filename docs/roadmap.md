@@ -20,7 +20,7 @@ software engineering standards.
 | **Phase 8** | Adversarial Plan Review Alignment | **Done** |
 | **Phase 9** | CL Author Guidelines (Small CLs) | **Done** |
 | **Phase 10** | API Design Standards | **Done** |
-| **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Pending** |
+| **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Done** |
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
 | **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
 | **Phase 14** | Code Reviewer's Guide Integration | **Pending** |
@@ -88,18 +88,17 @@ software engineering standards.
 - Created `rules/code/api-design.md` for resource naming and standard methods.
 - Updated `personas/architect.md` to consult the API design rules.
 
+### Phase 11 — Software Testing Principles
+
+- Created `rules/code/testing-practices.md` with cross-language testing principles
+  derived from Google's Testing on the Toilet.
+- Covers hermetic tests, behavior verification, and input-value strategy.
+- Updated `rules/.context.md`, `rules/code/.context.md`, and `rules/README.md`
+  to reference the new rule.
+
 ---
 
 ## Future Implementation Plan
-
-### Phase 11 — Software Testing Principles
-
-*   **Goal**: Ensure deterministic and maintainable test suites.
-*   **Actions**:
-    *   Create `rules/code/testing-practices.md` covering hermetic tests and
-      behavior verification.
-    *   Align with "Testing on the Toilet" best practices.
-*   **Reference**: [Google Testing on the Toilet](https://testing.googleblog.com/).
 
 ### Phase 12 — Resiliency and Production Standards (SRE)
 
