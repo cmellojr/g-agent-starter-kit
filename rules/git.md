@@ -21,6 +21,17 @@ Database schema changes MUST be called out explicitly in the commit message.
 
 Squash and rebase MUST NOT be used — ever. Merge commits preserve the true history. Rewriting history risks destroying work and misleading anyone who reads the log.
 
+### Message Structure
+
+Commit messages MUST follow the structure prescribed by
+[How to Write a Git Commit Message](https://cbea.ms/git-commit/):
+
+1. **Subject line:** ≤ 50 characters, capitalized, no trailing period,
+   imperative mood ("Add feature", not "Added feature").
+2. **Blank line** between subject and body.
+3. **Body:** wrapped at 72 characters, explains **what** and **why**, not
+   **how**. Omit the body when the subject alone carries the full intent.
+
 ## Rationale
 
 Consistent commit conventions enable automated changelogs, semantic versioning, and make git history readable. Short commits with clear intent are easier to review, revert, and bisect. Forbidding squash and rebase eliminates an entire class of mistakes — lost commits, force-push conflicts, and diverged histories — with no meaningful trade-off.
