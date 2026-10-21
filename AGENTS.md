@@ -251,3 +251,30 @@ directory) and **`docs/FEATURE-MAP.md`** (per project).
 - When one is missing or stale, dispatch `.agents/personas/contextualizer.md`.
 - Update the affected file in the same commit as the change that made it stale.
 - Formats and enforcement: `.agents/skills/context-maintenance/SKILL.md`.
+
+## Repository Conventions
+
+This repository is the canonical framework source. The `.agents/` directory is
+a mirror kept in sync by `scripts/sync-framework.sh`; `AGENTS.md`, `personas/`,
+`skills/`, and `rules/` MUST exist identically in both trees.
+
+- Ensure changes pass CI (see `docs/CONTRIBUTING.md` and
+  `docs/ci-presubmit.md` if present).
+- Follow the language style rules in `rules/code/code-style-*.md` for affected
+  files.
+- Update `.context.md` when the structure changes (follows:
+  `.agents/skills/context-maintenance/SKILL.md`).
+- Run the appropriate Reviewer passes (`.github/jules-review-rules.md`) and
+  address blockers before requesting review.
+- Update `docs/FEATURE-MAP.md` and `CHANGELOG.md` for user-facing changes.
+
+### References
+
+- `docs/CONTRIBUTING.md` — contribution and PR guidance.
+- `rules/git.md` — commit message and branch guidance.
+- `.github/jules-review-rules.md` — PR review pipeline and pass expectations.
+- `.agents/skills/dispatch/SKILL.md` and `.agents/skills/boot/SKILL.md` —
+  Maestro dispatch and boot procedures.
+- `rules/code/code-style-*.md` — language-specific style guides (Python, Go,
+  Shell, Rust, Markdown).
+- `.agents/skills/code-sec-review/SKILL.md` — security review checklist.
