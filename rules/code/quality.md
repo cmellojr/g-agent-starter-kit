@@ -1,8 +1,8 @@
 ---
 shortDescription: Universal code quality conventions for all languages.
 scope: coding
-version: 0.3.5
-lastUpdated: 2026-06-18
+version: 0.4.0
+lastUpdated: 2026-10-21
 ---
 
 ## Language-Specific Style Guides
@@ -91,6 +91,61 @@ single conceptual unit.
 Errors MUST always be logged. An error that passes without a log entry is a
 silent failure. Handling depends on context — if the error is non-critical, it
 may be logged and not propagated, but it must never be swallowed silently.
+
+### Resilient Error Handling
+
+Retry logic MUST use truncated exponential backoff with jitter. Fixed-interval
+retries synchronize clients and amplify outages (thundering herd).
+
+Required parameters:
+
+- **Initial delay**: 1–2 seconds
+- **Multiplier**: 2.0 (doubling each attempt)
+- **Maximum delay**: 32–64 seconds (truncation cap)
+- **Jitter**: random fraction ≤ 1 second added to each delay
+- **Maximum attempts**: 3–6 (per-request retry budget)
+- **Per-client retry budget**: retry ratio ≤ 10% of total requests
+
+Clients SHOULD include a retry attempt counter in request metadata. Servers
+SHOULD return "overloaded; don't retry" errors when the system cannot absorb
+retries, preventing combinatorial retry explosions.
+
+Retry only idempotent operations or requests with safe-to-retry error codes
+(5xx, 429, network timeout). Never retry 4xx client errors except 409
+(conflict) when appropriate.
+
+### Structured Logging
+
+Log entries MUST be structured (JSON) — never plain text. Structured logs
+enable indexing, querying, and correlation across services.
+
+Required fields on every log entry:
+
+- **timestamp**: RFC3339/ISO 8601 with millisecond precision
+- **severity**: DEBUG, INFO, WARNING, ERROR, CRITICAL
+- **message**: human-readable summary
+- **service**: service/component name
+- **trace_id**: distributed trace ID (W3C trace-context format)
+- **span_id**: current span ID within the trace
+
+Recommended fields when applicable:
+
+- **operation_id**: logical operation identifier for grouping related logs
+- **user_id** / **request_id**: correlation identifiers
+- **labels**: key-value pairs for dimensional querying (e.g., `method`,
+    `endpoint`, `error_code`)
+- **source_location**: file, line, function for debugging context
+
+Log levels MUST be used correctly:
+
+- **DEBUG**: verbose diagnostic detail (disabled in production by default)
+- **INFO**: normal operational events (request start/end, state transitions)
+- **WARNING**: unexpected but handled (retry attempt, deprecated API use)
+- **ERROR**: operation failed but service continues (failed request, DB error)
+- **CRITICAL**: service degradation or data loss (outage, corruption)
+
+Never log secrets, PII, or credentials. Sanitize sensitive fields before
+serialization.
 
 ### Process-Killing Exceptions
 

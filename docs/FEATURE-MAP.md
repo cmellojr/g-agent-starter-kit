@@ -99,3 +99,16 @@ implementations for design, quality, security, and docs.
     for the conductor
 
 ---
+
+## Resiliency & Production Standards (SRE)
+
+Integrates Google SRE practices for production stability into code quality rules.
+
+**Flow:**
+
+1. `rules/code/quality.md` — universal quality conventions extended with:
+   - **Resilient Error Handling** (lines 95–115): truncated exponential backoff with jitter, per-request retry budget (3–6 attempts), per-client retry budget (≤10% retry ratio), retry attempt counters, "overloaded; don't retry" server responses
+   - **Structured Logging** (lines 117–148): JSON-only log entries, required fields (timestamp, severity, message, service, trace_id, span_id), recommended fields (operation_id, user_id, labels, source_location), correct log level usage, secrets/PII prohibition
+2. `rules/code/quality.md` frontmatter — version 0.4.0, updated 2026-10-21
+
+---
