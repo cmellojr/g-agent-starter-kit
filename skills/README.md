@@ -11,6 +11,8 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 - `boot/SKILL.md` — session startup — gitignore, auto-update, memory, rules, orient
 - `browser-inspect/SKILL.md` — browser inspection for UI verification (coder)
 - `code-coherence-review/SKILL.md` — logic coherence, correctness, and structural integrity checks
+- `code-design-review/SKILL.md` — design review — Google Code Review principles for appropriateness, simplicity, maintainability
+- `code-documentation-review/SKILL.md` — documentation review — .context.md, docstrings, README, FEATURE-MAP.md
 - `code-quality-review/SKILL.md` — rules-walk procedure for coding standards compliance
 - `code-sec-review/SKILL.md` — static security review — attack surface, CWE/OWASP 2025, MITRE ATT&CK
 - `coder-self-review/SKILL.md` — GRASP self-review rubric — implementation quality gate

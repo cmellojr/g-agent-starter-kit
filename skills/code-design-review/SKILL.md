@@ -1,5 +1,6 @@
 ---
-shortDescription: Reviews code and plans for design quality — appropriateness, simplicity, maintainability.
+name: code-design-review
+description: Reviews code and plans for design quality — appropriateness, simplicity, maintainability.
 usedBy: [reviewer]
 version: 0.1.0
 lastUpdated: 2026-06-03
