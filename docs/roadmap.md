@@ -24,7 +24,7 @@ software engineering standards.
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
 | **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
 | **Phase 14** | Code Reviewer's Guide Integration | **Pending** |
-| **Phase 15** | Framework Distribution (clone-based `.agents`) | **In progress** |
+| **Phase 15** | Framework Distribution (clone-based `.agents`) | **Done** |
 
 ---
 
