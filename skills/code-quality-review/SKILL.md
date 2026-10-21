@@ -45,6 +45,16 @@ A code review without a checklist drifts toward gut feeling — the reviewer cat
 
    If the codebase uses a specific language with a dedicated rule file, include that file. If the language has no dedicated file, apply only `rules/code/general.md`. One pass-routing exception — severity rules are unchanged: the behavior-over-implementation rule in `rules/code/general.md` § Testing is a test-proof question — hand it to the coherence pass per the Guardrails; do not classify it here.
 
+   **Language detection for style guides.** Detect the language of each changed file by extension and include the corresponding guide:
+
+   - `.py` → `rules/code/code-style-python.md`
+   - `.go` → `rules/code/code-style-go.md`
+   - `.sh` → `rules/code/code-style-shell.md`
+   - `.rs` → `rules/code/code-style-rust.md`
+   - `.md` → `rules/code/code-style-markdown.md`
+
+   If multiple languages are involved, include every matching guide.
+
    Mark phase 1 as `[x]` in the progress file.
 
 3. **Walk the work against every rule and classify findings.** Check each statement in each loaded rule file against the changed code or plan. Do not skip or paraphrase rules — the rules are the source of truth. Classify each issue found:
