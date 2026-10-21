@@ -1,81 +1,288 @@
-#!/bin/bash
-# Sync the framework files between the repository root and the nested .agents/
-# clone so the two copies cannot silently drift apart.
+#!/usr/bin/env bash
 #
-# Usage:
-#   scripts/sync-framework.sh            # sync root -> .agents/ (root is canonical)
-#   scripts/sync-framework.sh --to-root  # sync .agents/ -> root (after `git -C .agents pull`)
-#   scripts/sync-framework.sh --check    # report drift only, no writes
+# @description  Updates, checks, or retargets the .agents/ framework clone.
+# @usage        .agents/scripts/sync-framework.sh [--check | --track <ref> | -h]
+# @output       Framework state keys on stdout. Warnings on stderr.
+# @requires     bash v4+, git
+# @version      1.1.0
+# @updated      2026-10-21
 #
-# The script refuses to sync when either side has uncommitted changes, so a
-# sync never hides work in progress. Deletions in the source are reported but
-# not auto-removed (kept intentionally conservative); remove them manually.
+# Run this script from the project root. It updates the .agents/ clone and
+# never copies files between the project tree and the clone.
 
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-AGENTS_DIR="$ROOT_DIR/.agents"
+projectRoot="$PWD"
+cloneDir="${projectRoot}/.agents"
 
-# Framework paths tracked in both locations (relative to each root).
-readonly PATHS=(AGENTS.md personas skills rules)
+#
+## Framework Clone
+#
 
-usage() {
-  grep '^#' "$0" | sed 's/^# \{0,1\}//'
-  exit "${1:-0}"
+printFrameworkUsage() {
+  cat <<'EOF'
+Usage: .agents/scripts/sync-framework.sh [option]
+
+Run this script from the project root. It updates the .agents/ framework
+clone. With no option, pull the current branch with --ff-only.
+
+Options:
+  --check          Compare HEAD with the remote branch. No fetch.
+  --track <ref>    Fetch origin, then reset the clone to origin/<ref>.
+  -h, --help       Show this help.
+EOF
 }
 
-main() {
-  local arg="${1:-}"
-  arg="${arg%$'\r'}"
-  local mode=""
-  case "$arg" in
-    "") mode="to-agents" ;;
-    --to-root) mode="to-root" ;;
-    --check) mode="check" ;;
-    -h|--help) usage 0 ;;
-    *) echo "Unknown argument: $arg" >&2; usage 1 ;;
-  esac
+requireFrameworkClone() {
+  local cloneTopLevel resolvedCloneDir resolvedProjectRoot
+  cloneTopLevel=$(git -C "$cloneDir" rev-parse \
+    --show-toplevel 2>/dev/null) || true
+  resolvedCloneDir=$(cd "$cloneDir" 2>/dev/null && pwd -P) || true
+  resolvedProjectRoot=$(cd "$projectRoot" 2>/dev/null && pwd -P) || true
 
-  # Refuse to sync with uncommitted (tracked) changes on either side.
-  local dir
-  for dir in "$ROOT_DIR" "$AGENTS_DIR"; do
-    if [[ -n "$(git -C "$dir" status --porcelain 2>/dev/null | grep -v '^??')" ]]; then
-      echo "ERROR: uncommitted changes in $dir — commit or stash before syncing." >&2
-      exit 1
-    fi
-  done
-
-  if [[ "$mode" == "check" ]]; then
-    if diff -rq "$ROOT_DIR/AGENTS.md" "$AGENTS_DIR/AGENTS.md" >/dev/null 2>&1 && \
-       diff -rq "$ROOT_DIR/personas" "$AGENTS_DIR/personas" >/dev/null 2>&1 && \
-       diff -rq "$ROOT_DIR/skills" "$AGENTS_DIR/skills" >/dev/null 2>&1 && \
-       diff -rq "$ROOT_DIR/rules" "$AGENTS_DIR/rules" >/dev/null 2>&1; then
-      echo "in sync"
-    else
-      echo "DRIFT DETECTED:"
-      local p
-      for p in "${PATHS[@]}"; do
-        diff -rq "$ROOT_DIR/$p" "$AGENTS_DIR/$p" || true
-      done
-    fi
-    exit 0
+  if [[ -n "$resolvedCloneDir" &&
+    "$resolvedCloneDir" == "$resolvedProjectRoot" ]]; then
+    cat >&2 <<EOF
+FrameworkCloneIsProject: '${resolvedCloneDir}' is the project repository.
+Point the clone at a separate .agents/ directory, then retry.
+EOF
+    exit 1
   fi
 
-  local src="$ROOT_DIR"
-  local dst="$AGENTS_DIR"
-  [[ "$mode" == "to-root" ]] && src="$AGENTS_DIR" && dst="$ROOT_DIR"
+  if [[ -z "$cloneTopLevel" || "$cloneTopLevel" != "$resolvedCloneDir" ]]; then
+    cat >&2 <<EOF
+FrameworkCloneMissing: '${resolvedCloneDir:-${cloneDir}}' is not a git worktree.
+Install the framework clone, or restore it, then retry.
+EOF
+    exit 1
+  fi
 
-  echo "Syncing: $src -> $dst"
-  local p extra
-  for p in "${PATHS[@]}"; do
-    cp -Rf "$src/$p" "$dst/$p"
-    # Report files present in dst but missing in src (manual cleanup needed).
-    while IFS= read -r extra; do
-      echo "  NOTE: $extra exists in $dst but not in $src — remove manually if intended as deletion."
-    done < <(diff -rq "$src/$p" "$dst/$p" 2>/dev/null | grep '^Only in '"$dst" | sed "s|^Only in $dst/||")
-    echo "  synced $p"
-  done
-  echo "Done. Review the diff and commit on both sides."
+  local cloneGitDir projectGitDir
+  cloneGitDir=$(git -C "$cloneDir" rev-parse --absolute-git-dir)
+  projectGitDir=$(git -C "$projectRoot" rev-parse --absolute-git-dir \
+    2>/dev/null) || projectGitDir=""
+
+  if [[ -n "$projectGitDir" && "$cloneGitDir" == "$projectGitDir" ]]; then
+    cat >&2 <<EOF
+FrameworkCloneIsProject: '${resolvedCloneDir}' is the project repository.
+Point the clone at a separate .agents/ directory, then retry.
+EOF
+    exit 1
+  fi
 }
 
-main "$@"
+reportFrameworkUpdateFailure() {
+  local previousHash="$1"
+  local lastCommitDate
+  lastCommitDate=$(git -C "$cloneDir" log -1 --format=%cs)
+
+  cat >&2 <<EOF
+WARNING: FrameworkNotUpdated: the clone could not pull from origin.
+WARNING: The session continues on the existing clone at ${previousHash}.
+WARNING: framework not updated since ${lastCommitDate}.
+EOF
+  exit 1
+}
+
+updateFrameworkClone() {
+  requireFrameworkClone
+
+  local branch
+  branch=$(git -C "$cloneDir" rev-parse --abbrev-ref HEAD)
+
+  if [[ "$branch" == "HEAD" ]]; then
+    echo "FrameworkDetachedHead: the clone is not on a branch." >&2
+    exit 1
+  fi
+
+  echo "frameworkBranch=${branch}"
+
+  local previousHash
+  previousHash=$(git -C "$cloneDir" rev-parse --short HEAD)
+  echo "frameworkBefore=${previousHash}"
+
+  if ! git -C "$cloneDir" pull --quiet --ff-only; then
+    reportFrameworkUpdateFailure "$previousHash"
+  fi
+
+  local currentHash
+  currentHash=$(git -C "$cloneDir" rev-parse --short HEAD)
+  echo "frameworkAfter=${currentHash}"
+
+  if [[ "$currentHash" == "$previousHash" ]]; then
+    echo "frameworkChanged=no"
+    return
+  fi
+  echo "frameworkChanged=yes"
+}
+
+checkFrameworkClone() {
+  requireFrameworkClone
+
+  local branch shortHash fullHash subject
+  branch=$(git -C "$cloneDir" rev-parse --abbrev-ref HEAD)
+  shortHash=$(git -C "$cloneDir" rev-parse --short HEAD)
+  fullHash=$(git -C "$cloneDir" rev-parse HEAD)
+  subject=$(git -C "$cloneDir" log -1 --format=%s)
+
+  if [[ "$branch" == "HEAD" ]]; then
+    echo "FrameworkDetachedHead: the clone is not on a branch." >&2
+    exit 1
+  fi
+
+  if ! git -C "$cloneDir" rev-parse --verify --quiet \
+    "refs/remotes/origin/${branch}^{commit}" >/dev/null; then
+    echo "FrameworkRemoteMissing: origin/${branch} does not exist." >&2
+    exit 1
+  fi
+
+  local behindCount aheadCount
+  behindCount=$(git -C "$cloneDir" rev-list --count "HEAD..origin/${branch}")
+  aheadCount=$(git -C "$cloneDir" rev-list --count "origin/${branch}..HEAD")
+
+  local worktreeStatus worktreeState
+  worktreeStatus=$(git -C "$cloneDir" status --porcelain)
+  worktreeState="clean"
+  if [[ -n "$worktreeStatus" ]]; then
+    worktreeState="dirty"
+  fi
+
+  local remoteState remoteHead
+  remoteState="unknown"
+  remoteHead=""
+  if remoteHead=$(git -C "$cloneDir" ls-remote --heads origin \
+    "refs/heads/${branch}" | cut -f1) && [[ -n "$remoteHead" ]]; then
+    remoteState="reachable"
+  fi
+
+  cat <<EOF
+frameworkBranch=${branch}
+frameworkHead=${shortHash}
+frameworkSubject=${subject}
+frameworkBehind=${behindCount}
+frameworkAhead=${aheadCount}
+frameworkWorktree=${worktreeState}
+frameworkRemoteState=${remoteState}
+EOF
+
+  if [[ "$remoteState" == "unknown" ]]; then
+    echo "FrameworkRemoteUnknown: cannot confirm sync with" \
+      "origin/${branch}." >&2
+    exit 1
+  fi
+
+  echo "frameworkRemoteHead=${remoteHead}"
+
+  if [[ "$remoteHead" != "$fullHash" ]]; then
+    echo "FrameworkOutOfSync: HEAD ${fullHash} differs from" \
+      "origin/${branch} ${remoteHead}." >&2
+    exit 1
+  fi
+
+  if [[ "$worktreeState" != "clean" ]]; then
+    echo "FrameworkWorktreeDirty: the clone has uncommitted changes." >&2
+    exit 1
+  fi
+  exit 0
+}
+
+trackFrameworkRef() {
+  local requestedRef="$1"
+  requireFrameworkClone
+
+  if ! git check-ref-format --branch "$requestedRef" >/dev/null 2>&1; then
+    echo "InvalidFrameworkRef: '${requestedRef}' is not a valid branch." >&2
+    exit 2
+  fi
+
+  if ! git -C "$cloneDir" fetch origin; then
+    echo "FrameworkFetchFailed: could not fetch origin." >&2
+    exit 1
+  fi
+
+  if ! git -C "$cloneDir" show-ref --verify --quiet \
+    "refs/remotes/origin/${requestedRef}"; then
+    echo "UnknownFrameworkRef: '${requestedRef}' does not exist on origin." >&2
+    exit 1
+  fi
+
+  local trackedChanges currentBranch discardedCommits
+  trackedChanges=$(git -C "$cloneDir" status --porcelain \
+    --untracked-files=no)
+  currentBranch=$(git -C "$cloneDir" rev-parse --abbrev-ref HEAD)
+
+  discardedCommits=""
+  if [[ "$currentBranch" == "$requestedRef" ]]; then
+    discardedCommits=$(git -C "$cloneDir" log --oneline \
+      "origin/${requestedRef}..HEAD")
+  elif git -C "$cloneDir" show-ref --verify --quiet \
+    "refs/heads/${requestedRef}"; then
+    discardedCommits=$(git -C "$cloneDir" log --oneline \
+      "origin/${requestedRef}..${requestedRef}")
+  fi
+
+  local discardedWork=""
+  if [[ -n "$trackedChanges" ]]; then
+    discardedWork+="Tracked modifications:"$'\n'"${trackedChanges}"
+  fi
+  if [[ -n "$discardedCommits" ]]; then
+    if [[ -n "$discardedWork" ]]; then
+      discardedWork+=$'\n'
+    fi
+    discardedWork+="Discarded commits:"$'\n'"${discardedCommits}"
+  fi
+
+  cat >&2 <<EOF
+WARNING: FrameworkTrackDiscardsChanges: the clone is force-reset.
+WARNING: The target is origin/${requestedRef}.
+WARNING: Tracked modifications in the clone are discarded.
+WARNING: Untracked files that collide with the target tree are removed.
+${discardedWork}
+EOF
+
+  git -C "$cloneDir" checkout --force -B "$requestedRef" \
+    "origin/${requestedRef}"
+  git -C "$cloneDir" reset --hard "origin/${requestedRef}"
+  git -C "$cloneDir" branch --set-upstream-to="origin/${requestedRef}" \
+    "$requestedRef"
+
+  local shortHash
+  shortHash=$(git -C "$cloneDir" rev-parse --short HEAD)
+  cat <<EOF
+frameworkRef=${requestedRef}
+frameworkHead=${shortHash}
+EOF
+}
+
+#
+## Runtime
+#
+
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+  return 0
+fi
+
+case "${1:-}" in
+  "")
+    updateFrameworkClone
+    ;;
+  --check)
+    checkFrameworkClone
+    ;;
+  --track)
+    if [[ -z "${2:-}" ]]; then
+      echo "MissingFrameworkRef: --track requires a ref name." >&2
+      printFrameworkUsage >&2
+      exit 2
+    fi
+    trackFrameworkRef "$2"
+    ;;
+  -h|--help)
+    printFrameworkUsage
+    ;;
+  *)
+    echo "UnknownArgument: $1" >&2
+    printFrameworkUsage >&2
+    exit 2
+    ;;
+esac

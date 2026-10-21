@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+1.1.0 - 2026/10/21
+feat(scripts): update the .agents/ clone and report branch and commit change
+feat(scripts): add --track <ref> and a remote-aware --check
+refactor(scripts): detect stale clones with git ls-remote, not a cached ref
+
+Removed: --to-root and the file-copy modes. Callers must use the clone modes.
+
 1.0.1 - 2026/10/21
 chore(sync): merge upstream ntorga/agent-starter-kit 1.0.0 — skills flattened to name/SKILL.md layout, personas gain name/description frontmatter, AGENTS.md style book adopted
 refactor(agents): re-apply repository operational checklist, CI/Jules review references, and framework mirror note on top of upstream style book

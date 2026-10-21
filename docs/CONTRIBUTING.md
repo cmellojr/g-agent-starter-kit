@@ -85,7 +85,10 @@ When submitting pull requests, please follow these steps:
   file you modify;
 - Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification for every commit message;
 - Ensure your changes do not break the boot sequence — test by running the
-  framework in a sample project;
+  framework in a sample project. To dogfood a branch before release, run
+  `.agents/scripts/sync-framework.sh --track <branch>`. The clone is
+  force-reset, and uncommitted work in it is discarded. The clone returns to
+  the stable branch with `--track main`;
 - Obtain approval from two reviewers before merging. If you lack merge
   permissions, the second reviewer can complete the merge for you.
 

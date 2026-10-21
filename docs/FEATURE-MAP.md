@@ -13,9 +13,11 @@ agent bindings, and detects active languages.
 1. `AGENTS.md` — entrypoint file for AI agents to load the Maestro conductor
 2. `personas/maestro.md` — orchestration persona that executes the boot
    sequence
-3. `skills/boot/SKILL.md` — procedure for Git pull, memory load, and
-   rules/language detection
-4. `skills/assets/maestro-boot-configure-cli.sh` — configures persona CLI
+3. `skills/boot/SKILL.md` — procedure for the framework update, memory load,
+   and rules/language detection
+4. `scripts/sync-framework.sh` — pulls the `.agents/` clone and reports the
+   commit before and after
+5. `skills/assets/maestro-boot-configure-cli.sh` — configures persona CLI
    bindings in `opencode.json`
 
 ---

@@ -321,10 +321,16 @@ benchmark best measures the capability each role needs, then set
 
 ### Does the framework auto-update?
 
-Yes. On every session start, the boot sequence runs `git -C .agents pull`. If
-the pull brings changes, the Maestro reads the changelog, purges any long-term
-memory entries that the update made obsolete, and reboots with the new
-instructions.
+Yes. On every session start, the boot sequence runs
+`.agents/scripts/sync-framework.sh`. The script pulls the `.agents/` clone on
+its current branch, which tracks `main` by default. It prints the short commit
+hash before and after the update. If the pull fails, the Maestro announces that
+the framework was not updated and continues on the existing clone.
+
+To test a ref that is not stable, run
+`.agents/scripts/sync-framework.sh --track <ref>`. The clone is force-reset,
+and uncommitted work in it is discarded. The clone returns to `main` with
+`--track main`.
 
 ### What does "model-agnostic" mean? Which models are supported?
 

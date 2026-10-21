@@ -255,9 +255,16 @@ directory) and **`docs/FEATURE-MAP.md`** (per project).
 ## Repository Conventions
 
 This repository is the canonical framework source. The `.agents/` directory is
-a mirror kept in sync by `scripts/sync-framework.sh`; `AGENTS.md`, `personas/`,
-`skills/`, and `rules/` MUST exist identically in both trees.
+a clone of the framework. The clone tracks the remote stable branch
+(`origin/main`) and refreshes at session start. The Maestro runs
+`.agents/scripts/sync-framework.sh` during boot, before it loads any other
+persona, skill, or rule.
 
+- To test a ref that is not stable, run
+  `.agents/scripts/sync-framework.sh --track <ref>`. The script checks out
+  `<ref>` from `origin`, tracks it, and resets the clone to it. The clone is
+  force-reset, and uncommitted work in it is discarded. The clone stays on the
+  selected ref until you run `--track main`.
 - Ensure changes pass CI (see `docs/CONTRIBUTING.md` and
   `docs/ci-presubmit.md` if present).
 - Follow the language style rules in `rules/code/code-style-*.md` for affected

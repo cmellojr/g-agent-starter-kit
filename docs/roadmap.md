@@ -24,6 +24,7 @@ software engineering standards.
 | **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
 | **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
 | **Phase 14** | Code Reviewer's Guide Integration | **Pending** |
+| **Phase 15** | Framework Distribution (clone-based `.agents`) | **In progress** |
 
 ---
 
@@ -133,6 +134,17 @@ software engineering standards.
     *   Define guidance for the AI reviewer on handling user pushback and
         managing review cycles constructively.
 *   **Reference**: [Google Code Reviewer's Guide](https://google.github.io/eng-practices/review/reviewer/).
+
+### Phase 15 — Framework Distribution
+
+*   **Goal**: Run the published framework from a git clone instead of a file
+    mirror.
+*   **Actions**:
+    *   Replace the `.agents/` symlink mirror with a clone that tracks
+        `origin/main`.
+    *   Refresh the clone at session start with
+        `.agents/scripts/sync-framework.sh`.
+    *   Keep `--track <ref>` as an opt-in for testing non-stable refs.
 
 ## See also
 
