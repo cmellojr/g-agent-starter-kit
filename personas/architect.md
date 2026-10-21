@@ -1,7 +1,7 @@
 ---
 name: architect
 description: Owns the grill's design tree. Grounds plan artifacts in the codebase and annotates impl.md with file references, method signatures, and test specs for the coder.
-preferredModel: host
+preferredModel: opencode
 modelTier: tier-3
 version: 0.6.0
 lastUpdated: 2026-09-12

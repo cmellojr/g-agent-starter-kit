@@ -134,6 +134,11 @@ providers:
     tier-1: gemini-3.5-flash
     tier-2: gemini-3.5-flash
     tier-3: gemini-3.1-pro-preview
+  opencode:
+    cli: opencode
+    tier-1: opencode/nemotron-3.5-lightning-free
+    tier-2: opencode/deepseek-v4.1-flash-free
+    tier-3: opencode/nemotron-3-ultra-free
   host:
     cli: null
     tier-1: null

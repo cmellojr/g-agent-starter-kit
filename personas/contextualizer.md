@@ -1,7 +1,7 @@
 ---
 name: contextualizer
 description: Reads project structure and produces .context.md files and docs/FEATURE-MAP.md.
-preferredModel: host
+preferredModel: opencode
 modelTier: tier-1
 version: 0.5.0
 lastUpdated: 2026-09-12

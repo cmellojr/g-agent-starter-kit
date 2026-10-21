@@ -1,7 +1,7 @@
 ---
 name: maestro
 description: Conductor. Orchestrates personas, sole interface to user.
-preferredModel: host
+preferredModel: opencode
 modelTier: tier-3
 version: 0.6.0
 lastUpdated: 2026-09-12

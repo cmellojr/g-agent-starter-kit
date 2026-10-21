@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Review safety net — sniper focus or full squad review, adapts to task.
-preferredModel: host
+preferredModel: opencode
 modelTier: tier-2
 version: 0.6.0
 lastUpdated: 2026-09-12

@@ -1,7 +1,7 @@
 ---
 name: coder
 description: Software development. Backend, frontend, APIs, components, data layers.
-preferredModel: host
+preferredModel: opencode
 modelTier: tier-2
 version: 0.5.0
 lastUpdated: 2026-09-12

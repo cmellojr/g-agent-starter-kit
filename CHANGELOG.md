@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+1.2.0 - 2026/10/21
+feat(dispatch): add the opencode provider with one free model per tier
+refactor(personas): bind every persona to the opencode provider and its tier model
+
 1.1.0 - 2026/10/21
 feat(scripts): update the .agents/ clone and report branch and commit change
 feat(scripts): add --track <ref> and a remote-aware --check

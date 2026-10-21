@@ -193,9 +193,10 @@ personas can focus on "what to do."
 - **Dispatch** — edit `skills/dispatch/SKILL.md` to match your CLI agents and
   provider routing. The Providers list and CLI Dispatch section are
   pre-configured for Claude Code, Codex, Cursor, DeepSeek, Gemini, and Qwen.
-  Each persona defaults to `host`, which uses whatever model your CLI provides,
-  so you can start without extra configuration. Add entries for any other
-  provider/model you use.
+  Each persona in this fork binds to the `opencode` provider, which maps the
+  three tiers to free models. Set `preferredModel: host` to follow the model
+  selected in the CLI instead. Add entries for any other provider/model you
+  use.
 - Add new personas to `personas/` following the schema in `personas/README.md`
 - Add rules to `rules/`
 - Add skills to `skills/` following the schema in `skills/README.md`
