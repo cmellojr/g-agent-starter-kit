@@ -195,7 +195,7 @@ main() {
       # run checks
       echo "Running lightweight checks (non-fatal)"
       python3 -m unittest discover -v || true
-      python3 skills/assets/check_markdown.py .context.md README.md AGENTS.md CHANGELOG.md docs/.context.md docs/CONTRIBUTING.md docs/features.md docs/roadmap.md || true
+      python3 skills/assets/check_markdown.py .context.md README.md AGENTS.md CHANGELOG.md docs/.context.md docs/CONTRIBUTING.md docs/FEATURE-MAP.md docs/roadmap.md || true
 
       if [ "$PUSH" = "true" ]; then
         git push origin HEAD:$RESOLVE_BRANCH
@@ -211,7 +211,7 @@ main() {
 
   echo "Running configured lightweight checks (non-fatal)"
   python3 -m unittest discover -v || true
-  python3 skills/assets/check_markdown.py .context.md README.md AGENTS.md CHANGELOG.md docs/.context.md docs/CONTRIBUTING.md docs/features.md docs/roadmap.md || true
+  python3 skills/assets/check_markdown.py .context.md README.md AGENTS.md CHANGELOG.md docs/.context.md docs/CONTRIBUTING.md docs/FEATURE-MAP.md docs/roadmap.md || true
 
   if [ "$PUSH" = "true" ]; then
     echo "Pushing ${SYNC_BRANCH} to origin"

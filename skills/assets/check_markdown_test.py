@@ -88,7 +88,7 @@ class TestCheckMarkdown(unittest.TestCase):
             "CHANGELOG.md",
             "docs/.context.md",
             "docs/CONTRIBUTING.md",
-            "docs/features.md",
+            "docs/FEATURE-MAP.md",
             "docs/roadmap.md",
         ]
         for tf in target_files:

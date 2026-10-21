@@ -19,8 +19,8 @@ should reinforce this philosophy:
   an average developer. Domain-specific or highly opinionated additions belong
   in your own fork, not here.
 - **Keep it minimal.** Every file added is context every user pays for. If a
-  contribution doesn't clearly benefit the common case, it doesn't belong in
-  the starter kit.
+  contribution doesn't clearly benefit the common case, it doesn't belong in the
+  starter kit.
 
 We value meaningful contributions that substantively improve the project. Please
 focus on quality over quantity — contributions should address real needs or
@@ -52,8 +52,8 @@ If you witness or experience inappropriate behavior, please contact the
 maintainers at legal _at_ goinfinite.net. All reports will be reviewed and
 addressed appropriately.
 
-Enforcement actions from correction to permanent bans will be taken depending
-on the severity of the violation.
+Enforcement actions from correction to permanent bans will be taken depending on
+the severity of the violation.
 
 ## Licensing
 
@@ -62,14 +62,14 @@ your submissions will be governed by this license.
 
 ## What We Don't Accept
 
-- **Provider list updates.** The models in `skills/dispatch.md` are examples,
-  not a registry. All personas default to `host` — the provider list only
-  matters when a user customizes away from it. We intentionally keep one
-  entry per CLI to minimize maintenance. If you want a different model,
-  edit your fork's `skills/dispatch.md` — no PR needed.
-- **Adding new providers or models.** We will not accept issues or PRs that add
-  new model entries to the Providers block. The starter kit is a foundation —
-  customize it in your own fork.
+- **Provider list updates.** The models in `skills/dispatch/SKILL.md` are
+  examples, not a registry. All personas default to `host` — the provider list
+  only matters when a user customizes away from it. We intentionally keep one
+  entry per CLI to minimize maintenance. If you want a different model, edit
+  your fork's `skills/dispatch/SKILL.md` — no PR needed.
+- **Adding new providers or models.** We will not accept issues or PRs that
+  add new model entries to the Providers block. The starter kit is a foundation
+  — customize it in your own fork.
 
 ## Pull Request Guidelines
 
@@ -83,12 +83,11 @@ When submitting pull requests, please follow these steps:
 - Update the `CHANGELOG.md` with a concise entry describing your change;
 - Increment the `version` and `lastUpdated` fields in the frontmatter of every
   file you modify;
-- Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-  specification for every commit message;
+- Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification for every commit message;
 - Ensure your changes do not break the boot sequence — test by running the
   framework in a sample project;
 - Obtain approval from two reviewers before merging. If you lack merge
   permissions, the second reviewer can complete the merge for you.
 
-By following these guidelines, you help maintain project quality and
-consistency while making contributions valuable to the community.
+By following these guidelines, you help maintain project quality and consistency
+while making contributions valuable to the community.

@@ -50,37 +50,39 @@ software engineering standards.
 
 - Updated `personas/reviewer.md` with new **Design** and **Documentation**
   passes.
-- Created `skills/code-design-review.md` and
-  `skills/code-documentation-review.md`.
-- Updated SHIELD rubric (`skills/reviewer-self-review.md`) to include new
+- Created `skills/code-design-review/SKILL.md` and
+  `skills/code-documentation-review/SKILL.md`.
+- Updated SHIELD rubric (`skills/reviewer-self-review/SKILL.md`) to include new
   passes.
 
 ### Phase 5 — Coder and Dispatch
 
 - Updated `personas/coder.md` to require consulting Google Style Guides.
-- Updated GRASP rubric (`skills/coder-self-review.md`) for style scores.
-- Updated `skills/dispatch.md` with automatic language detection for rules
+- Updated GRASP rubric (`skills/coder-self-review/SKILL.md`) for style scores.
+- Updated `skills/dispatch/SKILL.md` with automatic language detection for rules
   loading.
 
 ### Phase 6 — Boot and Config
 
-- Updated `skills/boot.md` to detect project languages during startup.
+- Updated `skills/boot/SKILL.md` to detect project languages during startup.
 - Updated `rules/README.md` with the new rules index.
 
 ### Phase 7 — Context Maintenance
 
-- Updated `skills/context-maintenance.md` to reference Google Style Guides in
+- Updated `skills/context-maintenance/SKILL.md` to reference Google Style
+  Guides in
   `.context.md` files.
 
 ### Phase 8 — Adversarial Plan Review
 
-- Updated `skills/reviewer-architect-adversarial.md` to verify plans against
+- Updated `skills/reviewer-architect-adversarial/SKILL.md` to verify plans
+  against
   language-specific style guides.
 
 ### Phase 9 — CL Author Guidelines
 
 - Updated `personas/coder.md` playbook with "Small CLs" principles.
-- Updated `skills/coder-self-review.md` to enforce technical reasoning in
+- Updated `skills/coder-self-review/SKILL.md` to enforce technical reasoning in
   commit messages and PR descriptions.
 
 ### Phase 10 — API Design Standards
@@ -90,7 +92,8 @@ software engineering standards.
 
 ### Phase 11 — Software Testing Principles
 
-- Created `rules/code/testing-practices.md` with cross-language testing principles
+- Created `rules/code/testing-practices.md` with cross-language testing
+  principles
   derived from Google's Testing on the Toilet.
 - Covers hermetic tests, behavior verification, and input-value strategy.
 - Updated `rules/.context.md`, `rules/code/.context.md`, and `rules/README.md`

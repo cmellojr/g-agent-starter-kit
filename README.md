@@ -29,7 +29,8 @@ Clone it, extend it, make it yours — or build one for your entire company.
 The **Maestro** is the conductor. It receives user requests, decomposes them,
 and dispatches work to specialized personas:
 
-- **Architect** — plans implementations, defines before/after states
+- **Architect** — owns the design tree the grill interviews over and grounds
+  plan artifacts for implementation
 - **Coder** — writes software following the plan
 - **Reviewer** — checks work for design, coherence, quality (against Google
   Style Guides), security (OWASP), and documentation completeness
@@ -66,6 +67,10 @@ install once. Each project gets its own copy of the framework.
    ```bash
    ln -s .agents/AGENTS.md AGENTS.md
    ```
+
+   The symlink matters: AI CLIs auto-load an `AGENTS.md` at the project root,
+   but not one inside `.agents/`. For project-specific rules that override the
+   style book, create `AGENTS.override.md` in the project root.
 
 3. Start the AI agent interface (e.g., `claude`, `opencode`, or whatever CLI/TUI
    you use).
@@ -119,57 +124,73 @@ exits silently and no configuration is needed.
 
 ```text
 personas/    Specialized AI roles (who does the work)
-rules/       Constraints organized by authority level
-  code/      code-style-python.md, code-style-go.md, code-style-shell.md, code-style-rust.md, code-style-markdown.md, plus debugging and quality guidance
-skills/      Reusable procedures and protocols
-docs/        roadmap.md — alignment plan and roadmap
+rules/       Constraints
+  code/      code-style-*.md, general.md, quality.md, api-design.md,
+             testing-practices.md, debugging.md, shell.md
+skills/      Reusable procedures and protocols (one SKILL.md per directory)
+docs/        roadmap.md — Google alignment plan; FEATURE-MAP.md — feature index
 ```
 
-## Rules Hierarchy
+## Rules
 
-- **Commandments** — absolute, never bypassed
-- **Code rules** — authoritative within scope, applicable to implementation and
-  review
-- **Other guidance** — supporting context and project-specific direction
-
-The `rules/code/` directory includes the language-specific Google Style Guides
-and related code-quality guidance (`code-style-python.md`, `code-style-go.md`,
-`code-style-shell.md`, `code-style-rust.md`, `code-style-markdown.md`,
-`debugging.md`, `quality.md`). These are the authoritative reference for coding
-conventions — code is evaluated against them during the Quality review pass.
+Rules use RFC-style language: **MUST** / **MUST NOT** are always blockers;
+**SHOULD** / **SHOULD NOT** require visible justification. The `rules/code/`
+directory includes the language-specific Google Style Guides
+(`code-style-python.md`, `code-style-go.md`, `code-style-shell.md`,
+`code-style-rust.md`, `code-style-markdown.md`) plus universal quality
+guidance (`general.md`, `quality.md`, `api-design.md`,
+`testing-practices.md`, `debugging.md`, `shell.md`). These are the
+authoritative reference for coding conventions — code is evaluated against
+them during the Quality review pass.
 
 ## Skills
 
 Skills codify procedures that personas reference. They answer "how to do X" so
 personas can focus on "what to do."
 
-- **agent-decision** — persona decision-making framework with self-review
-  rubrics
+- **agent-decision** — structured ambiguity escalation with 1-3-1 analysis and
+  FRAME self-review rubric
 - **agent-memory** — long-term and session memory across sessions
-- **architect-self-review** — DRAFT self-review rubric — plan quality gate
-- **boot** — session startup sequence (full boot for complex features)
+- **architect-design-tree** — builds the grill's design tree: decisions,
+  dependencies, recommendations, impact, facts
+- **architect-impl-grounding** — grounds the grill's artifacts, annotates
+  `impl.md` per epic, re-grounds after each landing
+- **boot** — session startup sequence (gitignore, auto-update, memory, rules,
+  context, CLI config, greet)
+- **browser-inspect** — browser inspection for verifying rendered web UI
 - **code-coherence-review** — logic coherence, correctness, and structural
   integrity checks
+- **code-design-review** — design review against Google Code Review principles
+- **code-documentation-review** — documentation review: `.context.md`,
+  docstrings, README, `FEATURE-MAP.md`
 - **code-quality-review** — rules-walk procedure for coding standards compliance
-- **code-sec-review** — OWASP-aligned security code review checklist
+- **code-sec-review** — static security review — attack surface, CWE/OWASP 2025,
+  MITRE ATT&CK
 - **coder-self-review** — GRASP self-review rubric — implementation quality
   gate
-- **context-maintenance** — schema and rules for `.context.md` files
+- **context-maintenance** — schema and rules for `.context.md` files and
+  `docs/FEATURE-MAP.md`
 - **contextualizer-self-review** — TRACE self-review rubric — context
   generation quality gate
 - **dispatch** — how the Maestro assembles and sends work to personas
+- **grill** — interviews the user in rounds over the Architect's design tree;
+  produces `plan.md`, `arch.md`, `impl.md`
 - **loop-recovery** — structured recovery and escalation for retry loops
-- **review-loop** — LOC-based review tier selection with shapeshifter dispatch
+- **plan-management** — plan lifecycle: grill entry, grounding, artifact
+  review, per-epic execution, revision
+- **review-loop** — two-mode review loop — single reviewer per epic, three
+  reviewers for full branch
 - **reviewer-architect-adversarial** — adversarial plan validation and
-  assumption attack
+  assumption attack on grill artifacts
 - **reviewer-handoff** — structured review summary format with verdict logic
 - **reviewer-self-review** — SHIELD self-review rubric — unified reviewer
   quality gate
 - **task-tracking** — file-based to-do for multi-step work
+- **web-search** — web search and page fetch through the TinyFish CLI
 
 ## Customization
 
-- **Dispatch** — edit `skills/dispatch.md` to match your CLI agents and
+- **Dispatch** — edit `skills/dispatch/SKILL.md` to match your CLI agents and
   provider routing. The Providers list and CLI Dispatch section are
   pre-configured for Claude Code, Codex, Cursor, DeepSeek, Gemini, and Qwen.
   Each persona defaults to `host`, which uses whatever model your CLI provides,
@@ -209,7 +230,8 @@ code once and walk away. This framework learns, remembers, and adapts across
 every session.
 
 *\* Almost — one optional shell script for OpenCode auto-configuration and a
-YAML provider list in `skills/dispatch.md`. No runtimes, no dependencies, no
+YAML provider list in `skills/dispatch/SKILL.md`. No runtimes, no dependencies,
+no
 build steps.*
 
 ### Full orchestration or quick mode — which do I use?
@@ -261,14 +283,15 @@ to one provider, one plan is enough.
 
 ### How does the Maestro use multiple models from a single CLI?
 
-The dispatch skill (`skills/dispatch.md`) handles this automatically. When a
+The dispatch skill (`skills/dispatch/SKILL.md`) handles this automatically. When
+a
 persona's `preferredModel` matches the host runtime (e.g., you're running
 Claude Code and the persona wants `claude`), the Maestro dispatches natively
 using the host's built-in subagent mechanism (e.g., the Task tool). When the
 `preferredModel` points to a different provider (e.g., `qwen` or `deepseek`),
 the Maestro shells out to that provider's CLI tool (e.g., `opencode`) by
 piping the assembled prompt via `stdin`. The Providers list in
-`skills/dispatch.md` maps each model family to its CLI — see that file for
+`skills/dispatch/SKILL.md` maps each model family to its CLI — see that file for
 details.
 
 ### Can I use this with just one model?
