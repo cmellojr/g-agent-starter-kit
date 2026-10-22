@@ -1,6 +1,16 @@
 # Changelog
 
 ```log
+1.3.0 - 2026/10/22
+feat(rules): add TypeScript and HTML/CSS style guides (Phase 13)
+feat(rules): add SRE resiliency and production standards (Phase 12)
+- rules/code/quality.md v0.4.0: Resilient Error Handling (backoff/jitter, retry budgets), Structured Logging (JSON, trace/span IDs, secrets prohibition)
+- rules/code/code-style-typescript.md: Google TypeScript Style Guide
+- rules/code/code-style-html-css.md: Google HTML/CSS Style Guide
+- docs/roadmap.md: Phases 12-13 marked complete
+- docs/FEATURE-MAP.md: new feature entries
+- rules/README.md: updated rules index
+
 1.2.0 - 2026/10/21
 feat(dispatch): add the opencode provider with one free model per tier
 refactor(personas): bind every persona to the opencode provider and its tier model

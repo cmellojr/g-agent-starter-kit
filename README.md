@@ -87,7 +87,7 @@ This framework doesn't just *reference* Google standards — it **operationalize
 
 | Practice | Implementation |
 |---|---|
-| **Style Guides** | `rules/code/code-style-*.md` for Python, Go, Shell, Rust, Markdown — auto-loaded by review pipeline per file extension |
+| **Style Guides** | `rules/code/code-style-*.md` for Python, Go, Shell, Rust, Markdown, TypeScript, HTML/CSS — auto-loaded by review pipeline per file extension |
 | **Code Review** | `reviewer-architect-adversarial` (adversarial plan validation) + `review-loop` (5-pass: design, coherence, quality, security, docs) |
 | **Testing on the Toilet** | `rules/code/testing-practices.md` — hermetic tests, behavior verification, input-value strategy |
 | **SRE / Resiliency** | `rules/code/quality.md` v0.4+ — truncated exponential backoff with jitter, retry budgets, structured JSON logging with trace/span IDs |
@@ -104,6 +104,8 @@ This framework doesn't just *reference* Google standards — it **operationalize
 | Shell | `rules/code/code-style-shell.md` |
 | Rust | `rules/code/code-style-rust.md` |
 | Markdown | `rules/code/code-style-markdown.md` |
+| TypeScript | `rules/code/code-style-typescript.md` |
+| HTML/CSS | `rules/code/code-style-html-css.md` |
 
 **Universal** (all languages): `quality.md`, `general.md`, `api-design.md`, `testing-practices.md`, `debugging.md`, `shell.md`
 
