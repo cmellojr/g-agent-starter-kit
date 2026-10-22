@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "upstream-sync": {
+      "source": "cmellojr/skills",
+      "sourceType": "github",
+      "skillPath": "upstream-sync/SKILL.md",
+      "computedHash": "3548ef0117bf4d6579ea4fee191c84ca9b0228c1a841f6ca337058af47b647bc"
+    }
+  }
+}
