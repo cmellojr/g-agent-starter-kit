@@ -21,8 +21,8 @@ software engineering standards.
 | **Phase 9** | CL Author Guidelines (Small CLs) | **Done** |
 | **Phase 10** | API Design Standards | **Done** |
 | **Phase 11** | Software Testing Principles (Testing on the Toilet) | **Done** |
-| **Phase 12** | Resiliency and Production Standards (SRE) | **Pending** |
-| **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Pending** |
+| **Phase 12** | Resiliency and Production Standards (SRE) | **Done** |
+| **Phase 13** | Frontend & Web Style Guides (TS, HTML/CSS) | **Done** |
 | **Phase 14** | Code Reviewer's Guide Integration | **Pending** |
 | **Phase 15** | Framework Distribution (clone-based `.agents`) | **Done** |
 
@@ -110,15 +110,27 @@ software engineering standards.
 *   **Actions**:
     *   Update `rules/code/quality.md` with resilient error handling
       (backoff/jitter) and structured logging.
-*   **Reference**: [Google SRE Books](https://sre.google/books/).
+*   **Completed**: 2026-10-21
+*   **Changes**:
+    *   `rules/code/quality.md` v0.4.0 — added **Resilient Error Handling** (truncated exponential backoff with jitter, per-request retry budget 3-6, per-client retry budget ≤10%, retry attempt counters, "overloaded; don't retry" server responses, safe-to-retry codes only)
+    *   `rules/code/quality.md` v0.4.0 — added **Structured Logging** (JSON-only, required fields: timestamp RFC3339, severity, message, service, trace_id, span_id; recommended: operation_id, user_id/request_id, labels, source_location; correct log levels DEBUG/INFO/WARNING/ERROR/CRITICAL; secrets/PII prohibition)
+    *   `docs/FEATURE-MAP.md` — added "Resiliency & Production Standards (SRE)" feature entry
+*   **Reference**: [Google SRE Books](https://sre.google/books/), [Cloud Logging](https://cloud.google.com/logging/docs/structured-logging), [Cloud IAM Retry Strategy](https://cloud.google.com/iam/docs/retry-strategy)
 
 ### Phase 13 — Frontend & Web Style Guides
 
-*   **Goal**: Official guides for TypeScript, HTML, and CSS.
+*   **Goal**: Official Google-aligned guides for TypeScript, HTML, and CSS.
+*   **Completed**: 2026-10-22
 *   **Actions**:
-    *   Create `rules/code/code-style-typescript.md`.
-    *   Create `rules/code/code-style-html-css.md`.
-*   **Reference**: [Google Style Guides](https://google.github.io/styleguide/).
+    *   Created `rules/code/code-style-typescript.md` — Google TypeScript Style Guide
+    *   Created `rules/code/code-style-html-css.md` — Google HTML/CSS Style Guide
+    *   Updated `rules/README.md` — added new guides to rules index
+    *   Updated `.agents/rules/code/.context.md` — added new guides to summary
+    *   Updated `.agents/skills/boot/SKILL.md` — added `.ts`, `.tsx`, `.html`, `.css`, `.scss`, `.sass` to language detection
+    *   Updated `.agents/skills/dispatch/SKILL.md` — added language detection for new extensions
+    *   Updated `docs/FEATURE-MAP.md` — added feature entry
+    *   Updated `docs/roadmap.md` — marked phase complete
+*   **Reference**: [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html), [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
 
 ### Phase 14 — Code Reviewer's Guide Integration
 

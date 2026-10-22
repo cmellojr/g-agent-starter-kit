@@ -10,7 +10,7 @@ Rules are constraints — short, direct, and non-procedural. A rule that needs m
 - **`code/quality`** — Universal code quality, naming, error handling, and data trust boundaries (coding)
 - **`code/api-design`** — Google REST API design standards and resource naming rules (coding)
 - **`code/testing-practices`** — Cross-language testing principles — hermetic tests, behavior verification, input-value strategy (coding)
-- **`code/code-style-*`** — Language-specific style guides — Go, Markdown, Python, Rust, Shell (coding)
+- **`code/code-style-*`** — Language-specific style guides — Go, Markdown, Python, Rust, Shell, TypeScript, HTML/CSS (coding)
 - **`git`** — Conventional commits, branch naming, commit style (coding)
 - **`context-maintenance`** — .context.md and FEATURE-MAP.md updates on structural changes (coding)
 - **`reviewing`** — Review dispatch sizing, file creation prohibition, tooling trust boundaries (reviewing)

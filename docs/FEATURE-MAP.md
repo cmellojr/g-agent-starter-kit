@@ -112,3 +112,26 @@ Integrates Google SRE practices for production stability into code quality rules
 2. `rules/code/quality.md` frontmatter — version 0.4.0, updated 2026-10-21
 
 ---
+
+## Frontend & Web Style Guides
+
+Official Google-aligned style guides for TypeScript, HTML, and CSS.
+
+**Flow:**
+
+1. `rules/code/code-style-typescript.md` — Google TypeScript Style Guide:
+   - Source file basics (encoding, structure, imports, exports)
+   - Language features (variables, arrays, objects, classes, functions)
+   - Type safety (strict mode, generics, null safety)
+   - Naming, comments, formatting conventions
+2. `rules/code/code-style-html-css.md` — Google HTML/CSS Style Guide:
+   - General rules (protocol, indentation, capitalization, encoding)
+   - HTML style (validity, semantics, multimedia, separation of concerns)
+   - CSS style (validity, class naming, shorthand, formatting)
+   - CSS formatting (declaration order, indentation, rules separation)
+2. `rules/README.md` — updated rules index with new guides
+3. `skills/boot/SKILL.md` — language detection for `.ts`, `.tsx`, `.html`, `.css`, `.scss`, `.sass`
+4. `skills/dispatch/SKILL.md` — language detection for style guide loading
+5. `docs/roadmap.md` — Phase 13 marked complete
+
+---
